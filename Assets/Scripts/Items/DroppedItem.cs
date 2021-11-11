@@ -19,7 +19,7 @@ public class DroppedItem : Item
         this.rb.AddForce(initialVelocity * 100, ForceMode.VelocityChange);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!this.groundChecks.Any(g => g.Hit.transform != null))
             this.rb.AddForce(this.transform.up * this.gravity * -100);
