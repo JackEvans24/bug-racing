@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CarMovement))]
 [RequireComponent(typeof(CarItemSystem))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private CarMovement movement;
     private CarItemSystem itemSystem;

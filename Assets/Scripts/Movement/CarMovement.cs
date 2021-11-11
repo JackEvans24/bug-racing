@@ -11,6 +11,7 @@ public class CarMovement : MonoBehaviour
     public int LapsCompleted = 0;
     public bool IsAi = false;
     public bool CanMove = false;
+    public int CurrentPosition;
 
     [Header("References")]
     [SerializeField] private Collider bodyCollider;
@@ -35,9 +36,6 @@ public class CarMovement : MonoBehaviour
 
     [Header("Checkpoint Reset")]
     [SerializeField] private float checkpointResetTime = 0.2f;
-
-    [Header("RacePosition")]
-    [SerializeField] private int currentPosition;
 
     private Rigidbody rb;
     private float forwardMovement, turnAmount, velocity;
@@ -107,7 +105,7 @@ public class CarMovement : MonoBehaviour
         }
 
         if (RaceManager.TryGetPosition(this, out var position))
-            this.currentPosition = position;
+            this.CurrentPosition = position;
     }
 
     private void LateUpdate()

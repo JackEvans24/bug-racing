@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46eb9e2b243cb734c812c5100e4dd4a9, type: 3}
-  m_Name: Banana
+  m_Name: Poop
   m_EditorClassIdentifier: 
+  itemName: Poop
   itemType: 2
   itemObj: {fileID: 6970165284555600482, guid: 821eccf4d4b67ce449ab79303c702fa3, type: 3}

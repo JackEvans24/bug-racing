@@ -4,7 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(CarMovement))]
-public class AIMovement : MonoBehaviour
+[RequireComponent(typeof(CarItemSystem))]
+public class AIController : MonoBehaviour
 {
     [Header("Turning")]
     [SerializeField] private float maxTurnAngle = 45f;
@@ -17,6 +18,9 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private float playerAvoidAmount = 0.5f;
     [SerializeField] private float deadZone = 2f;
 
+    [Header("Item usage")]
+    [SerializeField] private Vector2 itemUseWaitBounds;
+
     [Header("Ground Raycasts")]
     [SerializeField] private Raycaster[] leftGroundChecks;
     [SerializeField] private Raycaster[] rightGroundChecks;
@@ -25,20 +29,30 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private Raycaster[] leftObstacleChecks;
     [SerializeField] private Raycaster[] rightObstacleChecks;
 
+    [Header("Item Raycasts")]
+    [SerializeField] private Raycaster[] leftItemChecks;
+    [SerializeField] private Raycaster[] rightItemChecks;
+
     [Header("Player Raycasts")]
     [SerializeField] private Raycaster[] frontPlayerChecks;
     [SerializeField] private Raycaster[] leftPlayerChecks;
     [SerializeField] private Raycaster[] rightPlayerChecks;
 
     private CarMovement movement;
+    private CarItemSystem itemSystem;
     private PassDirection passDirection;
     
     private float forwardMovement = 1f;
+
+    private float currentItemWaitTime, currentItemWaitLimit;
+    private bool waitingForItemUse;
 
     private void Awake()
     {
         this.movement = GetComponent<CarMovement>();
         this.movement.IsAi = true;
+
+        this.itemSystem = GetComponent<CarItemSystem>();
     }
 
     private void Update()
@@ -47,7 +61,11 @@ public class AIMovement : MonoBehaviour
         var turnAmount = this.GetTurnAmount();
 
         this.movement.SetMovement(this.forwardMovement, turnAmount);
+
+        this.HandleItemUsage();
     }
+
+    #region Movement
 
     private float GetTurnAmount()
     {
@@ -64,6 +82,8 @@ public class AIMovement : MonoBehaviour
         if (this.TryAvoidEdges(turnAngle, out var avoidAngle))
             return avoidAngle;
         else if (this.TryAvoidObstacles(turnAngle, out avoidAngle))
+            return avoidAngle;
+        else if (this.TryHitItems(turnAngle, out avoidAngle))
             return avoidAngle;
 
         turnAngle = this.AvoidPlayers(turnAngle);
@@ -95,39 +115,36 @@ public class AIMovement : MonoBehaviour
             return maxAngle * modifier;
     }
 
-    private bool TryAvoidEdges(float turnAngle, out float avoidAngle)
+    private bool TryAvoidEdges(float turnAngle, out float avoidAngle) =>
+        this.TrySteerAccordingToRaycasters(turnAngle, out avoidAngle, this.leftGroundChecks, this.rightGroundChecks, avoid: false);
+
+    private bool TryAvoidObstacles(float turnAngle, out float avoidAngle) =>
+        this.TrySteerAccordingToRaycasters(turnAngle, out avoidAngle, this.leftObstacleChecks, this.rightObstacleChecks);
+
+    private bool TryHitItems(float turnAngle, out float avoidAngle) =>
+        this.TrySteerAccordingToRaycasters(turnAngle, out avoidAngle, this.leftItemChecks, this.rightItemChecks, avoid: false, editSpeed: false);
+
+    private bool TrySteerAccordingToRaycasters(float turnAngle, out float steerAngle, Raycaster[] leftChecks, Raycaster[] rightChecks, bool avoid = true, bool editSpeed = true)
     {
-        avoidAngle = turnAngle;
+        steerAngle = turnAngle;
 
         // Check collisions
-        var leftCollisions = this.leftGroundChecks.Count(c => c.Hit.transform != null);
-        var rightCollisions = this.rightGroundChecks.Count(c => c.Hit.transform != null);
-
-        // If both have ground, or neither have ground, don't edit turn value
-        if (leftCollisions == rightCollisions)
-            return false;
-
-        // Otherwise, steer away from edge and slow down
-        this.forwardMovement = (float)(rightCollisions + leftCollisions) / (float)(this.rightGroundChecks.Length + this.leftGroundChecks.Length);
-        avoidAngle += this.groundAvoidAmount * (rightCollisions - leftCollisions);
-        return true;
-    }
-
-    private bool TryAvoidObstacles(float turnAngle, out float avoidAngle)
-    {
-        avoidAngle = turnAngle;
-
-        // Check collisions
-        var leftCollisions = this.leftObstacleChecks.Count(c => c.Hit.transform != null);
-        var rightCollisions = this.rightObstacleChecks.Count(c => c.Hit.transform != null);
+        var leftCollisions = leftChecks.Count(c => c.Hit.transform != null);
+        var rightCollisions = rightChecks.Count(c => c.Hit.transform != null);
 
         // If both or neither, don't edit turn value
         if (leftCollisions == rightCollisions)
             return false;
 
-        // Otherwise, steer away from obstacle and slow down
-        this.forwardMovement = (float)((this.rightGroundChecks.Length + this.leftGroundChecks.Length) - (rightCollisions + leftCollisions)) / (float)(this.rightGroundChecks.Length + this.leftGroundChecks.Length);
-        avoidAngle += this.obstacleAvoidAmount * (leftCollisions - rightCollisions);
+        // Otherwise, steer towards / away from collisions and slow down
+        if (editSpeed)
+        {
+            this.forwardMovement = avoid ?
+                (float)((leftChecks.Length + rightChecks.Length) - (rightCollisions + leftCollisions)) / (leftChecks.Length + rightChecks.Length) :
+                (float)(rightCollisions + leftCollisions) / (leftChecks.Length + rightChecks.Length);
+        }
+
+        steerAngle += this.obstacleAvoidAmount * (leftCollisions - rightCollisions) * (avoid ? 1 : -1);
         return true;
     }
 
@@ -167,6 +184,30 @@ public class AIMovement : MonoBehaviour
         // Code should never get this far
         return turnAngle;
     }
+
+    #endregion
+
+    #region Item Usage
+
+    private void HandleItemUsage()
+    {
+        if (this.currentItemWaitTime <= this.currentItemWaitLimit)
+            this.currentItemWaitTime += Time.deltaTime;
+
+        if (this.currentItemWaitTime > this.currentItemWaitLimit && this.waitingForItemUse)
+        {
+            this.itemSystem.UseCurrentItem();
+            this.waitingForItemUse = false;
+        }
+        else if (!this.waitingForItemUse && this.itemSystem.CurrentItems.Count > 0)
+        {
+            this.currentItemWaitLimit = Random.Range(this.itemUseWaitBounds.x, this.itemUseWaitBounds.y);
+            this.currentItemWaitTime = 0f;
+            this.waitingForItemUse = true;
+        }
+    }
+
+    #endregion
 
     enum PassDirection
     {

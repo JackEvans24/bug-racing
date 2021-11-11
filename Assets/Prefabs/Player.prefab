@@ -1434,6 +1434,7 @@ MonoBehaviour:
   LapsCompleted: 0
   IsAi: 0
   CanMove: 0
+  CurrentPosition: 0
   bodyCollider: {fileID: 2584696185949308043}
   mainGroundCheck: {fileID: 1090839642993126126}
   groundChecks:
@@ -1458,7 +1459,6 @@ MonoBehaviour:
   gravity: 1
   slowGroundModifier: 0.5
   checkpointResetTime: 0.3
-  currentPosition: 0
 --- !u!114 &-7176244811223020933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2339,7 +2339,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4323040684448035011}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8}
+  m_LocalPosition: {x: 0, y: 0, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6027336862106712149}

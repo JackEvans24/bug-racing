@@ -20,7 +20,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public static ItemData GetItem(CarMovement requestedBy) => _instance.GetItemLocal(requestedBy);
+    public static ItemData[] GetItems(CarMovement requestedBy) => _instance.GetItemLocal(requestedBy);
 
-    private ItemData GetItemLocal(CarMovement requestedBy) => this.items[Random.Range(0, this.items.Length)];
+    private ItemData[] GetItemLocal(CarMovement requestedBy) => new[] { this.items[Random.Range(0, this.items.Length)] };
 }
