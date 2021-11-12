@@ -140,7 +140,9 @@ public class RaceManager : MonoBehaviour
     private IEnumerator EndRace()
     {
         Debug.Log($"Race complete!");
-        yield return new WaitForEndOfFrame();
+
+        yield return new WaitForSeconds(5);
+        Application.Quit();
     }
 
     private void UpdatePositions()
@@ -173,7 +175,16 @@ public class RaceManager : MonoBehaviour
 
     public static bool TryGetPosition(CarMovement car, out int position) => _instance.TryGetPositionLocal(car, out position);
 
-    private bool TryGetPositionLocal(CarMovement car, out int position) => this.racePositions.TryGetValue(car, out position);
+    private bool TryGetPositionLocal(CarMovement car, out int position)
+    {
+        if (this.finishedRacers.Contains(car))
+        {
+            position = this.finishedRacers.IndexOf(car) + 1;
+            return true;
+        }
+
+        return this.racePositions.TryGetValue(car, out position);
+    }
 
     public static bool TryGetRacer(int position, out CarMovement car) => _instance.TryGetRacerLocal(position, out car);
 

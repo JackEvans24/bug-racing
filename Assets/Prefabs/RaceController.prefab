@@ -50,7 +50,6 @@ MonoBehaviour:
   AI: {fileID: 7171308497548649729, guid: c45120b12794b524eb7513ecdc9e8424, type: 3}
   startLine: {fileID: 5518859712283160481}
   totalRacers: 8
-  raceStartTime: 2
   startPositioning: {x: 10, y: 20, z: 10}
   positionUpdateFrequency: 60
 --- !u!114 &5412294130925925061
@@ -65,7 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28508eb53131f294caa2236d3f777f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - {fileID: 11400000, guid: 9d56bc6f48568b0408dbdfecdf6be332, type: 2}
+  - {fileID: 11400000, guid: 06ab0eb0c7b37a440bd8f0ae121e292d, type: 2}
 --- !u!1001 &5412294132261931082
 PrefabInstance:
   m_ObjectHideFlags: 0
