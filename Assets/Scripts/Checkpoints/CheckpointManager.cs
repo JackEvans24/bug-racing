@@ -6,6 +6,7 @@ public class CheckpointManager : MonoBehaviour
 {
     [SerializeField] private Checkpoint startCheckpoint;
     [SerializeField] private int laps;
+    [SerializeField] private bool isCyclical = true;
 
     private static CheckpointManager _instance;
 
@@ -51,7 +52,9 @@ public class CheckpointManager : MonoBehaviour
     {
         var nextCheckpoint = forAI ? checkpoint.GetNextCheckpointForAI() : checkpoint.GetNextCheckpointForPlayer();
 
-        if (checkpoint.NextCheckpoints.Max(c => c.Index == 0))
+        if (this.isCyclical && checkpoint.Index == 0)
+            return NextCheckpointDto.Lap(nextCheckpoint);
+        else if (!this.isCyclical && checkpoint.NextCheckpoints.Max(c => c.Index == 0))
             return NextCheckpointDto.Lap(nextCheckpoint);
         else
             return NextCheckpointDto.Checkpoint(nextCheckpoint);

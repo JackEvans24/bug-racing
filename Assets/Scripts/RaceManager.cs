@@ -11,6 +11,8 @@ public class RaceManager : MonoBehaviour
     private Dictionary<CarMovement, int> racePositions = new Dictionary<CarMovement, int>();
     private List<CarMovement> finishedRacers = new List<CarMovement>();
 
+    private List<RaceTextController> raceTextControllers;
+
     [Header("References")]
     [SerializeField] private GameObject Camera;
     [SerializeField] private GameObject Player;
@@ -19,7 +21,6 @@ public class RaceManager : MonoBehaviour
 
     [Header("Race Start")]
     [SerializeField] private int totalRacers = 8;
-    [SerializeField] private int raceStartTime = 5;
     [SerializeField] private Vector3 startPositioning;
 
     [Header("Race position")]
@@ -70,6 +71,7 @@ public class RaceManager : MonoBehaviour
     private void GenerateRacers(int playerCount)
     {
         this.racers = new List<CarMovement>();
+        this.raceTextControllers = new List<RaceTextController>();
 
         var aiRacerCount = this.totalRacerCount - playerCount;
         for (int i = 0; i < this.totalRacerCount; i++)
@@ -80,14 +82,25 @@ public class RaceManager : MonoBehaviour
             var obj = isPlayer ? this.Player : this.AI;
 
             var racer = Instantiate(obj, position, this.startLine.rotation);
+            var carMovement = racer.GetComponent<CarMovement>();
 
             if (isPlayer)
             {
-                var cameraFollow = Instantiate(this.Camera).GetComponent<CameraFollow>();
+                var camera = Instantiate(this.Camera);
+
+                var cameraFollow = camera.GetComponent<CameraFollow>();
                 cameraFollow.target = racer.transform;
+
+                var hud = camera.GetComponent<HUDUpdater>();
+                hud.car = carMovement;
+                hud.itemSystem = racer.GetComponent<CarItemSystem>();
+
+                var textController = camera.GetComponentInChildren<RaceTextController>();
+                carMovement.TextController = textController;
+                this.raceTextControllers.Add(textController);
             }
 
-            this.racers.Add(racer.GetComponent<CarMovement>());
+            this.racers.Add(carMovement);
         }
     }
 
@@ -106,14 +119,27 @@ public class RaceManager : MonoBehaviour
 
     private IEnumerator StartRace()
     {
-        yield return new WaitForSeconds(this.raceStartTime);
+        for (int i = 0; i < this.raceTextControllers.Count; i++)
+        {
+            var controller = this.raceTextControllers[i];
+            if (i + 1 >= this.raceTextControllers.Count)
+                yield return controller.ShowRaceReady();
+        }
 
         foreach (var racer in this.racers)
             racer.CanMove = true;
+
+        for (int i = 0; i < this.raceTextControllers.Count; i++)
+        {
+            var controller = this.raceTextControllers[i];
+            if (i + 1 >= this.raceTextControllers.Count)
+                yield return controller.ShowRaceStart();
+        }
     }
 
     private IEnumerator EndRace()
     {
+        Debug.Log($"Race complete!");
         yield return new WaitForEndOfFrame();
     }
 
@@ -121,6 +147,7 @@ public class RaceManager : MonoBehaviour
     {
         var orderedRacers = racers
             .OrderByDescending(r => r.LapsCompleted)
+            .ThenByDescending(r => r.NextCheckpoint.Index == 0)
             .ThenByDescending(r => r.NextCheckpoint.Index)
             .ThenBy(r => this.GetDistanceToCheckpoint(r, r.NextCheckpoint))
             .ToList();
@@ -131,11 +158,14 @@ public class RaceManager : MonoBehaviour
             this.racePositions[orderedRacers[i]] = i + 1;
     }
 
-    public static void LogFinish(CarMovement car) => _instance.LogFinishLocal(car);
+    public static void LogFinish(CarMovement car, out int finalPosition) => _instance.LogFinishLocal(car, out finalPosition);
 
-    public void LogFinishLocal(CarMovement car)
+    public void LogFinishLocal(CarMovement car, out int finalPosition)
     {
         this.finishedRacers.Add(car);
+        Debug.Log($"{car.name} finished");
+
+        finalPosition = this.finishedRacers.IndexOf(car) + 1;
 
         if (this.finishedRacers.Count == this.racers.Count)
             StartCoroutine(this.EndRace());

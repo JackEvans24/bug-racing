@@ -8,6 +8,7 @@ public class ShotItem : Item
     [SerializeField] private Raycaster[] groundChecks;
     [SerializeField] private Raycaster[] forwardChecks;
     [SerializeField] private float velocity = 3f;
+    [SerializeField] private float lifetime = 3f;
     [SerializeField] private float gravity = 0.6f;
     [SerializeField] private float stunTime = 1f;
 
@@ -17,12 +18,13 @@ public class ShotItem : Item
     private void Awake()
     {
         this.rb = GetComponent<Rigidbody>();
+        Destroy(this.gameObject, this.lifetime);
     }
 
     private void Update()
     {
-        var floorNormal = this.GetFloorNormal();
-        this.transform.rotation = Quaternion.FromToRotation(transform.up, floorNormal) * transform.rotation;
+        //var floorNormal = this.GetFloorNormal();
+        //this.transform.rotation = Quaternion.FromToRotation(transform.up, floorNormal) * transform.rotation;
 
         this.Bounce();
     }
@@ -31,8 +33,9 @@ public class ShotItem : Item
     {
         if (!this.groundChecks.Any(g => g.Hit.transform != null))
         {
-            var floorNormal = this.GetFloorNormal();
-            this.rb.AddForce(floorNormal.normalized * this.gravity * -100);
+            //var floorNormal = this.GetFloorNormal();
+            //this.rb.AddForce(floorNormal.normalized * this.gravity * -100);
+            this.rb.AddForce(this.transform.up * this.gravity * -100);
         }
 
         this.rb.velocity = this.transform.forward * this.velocity;
@@ -75,7 +78,7 @@ public class ShotItem : Item
                 continue;
 
             var bounce = Vector3.Reflect(this.transform.forward, check.Hit.normal);
-            if (Vector3.Dot(this.transform.forward, bounce) > Vector3.Dot(this.transform.forward, maxBounce))
+            if (Vector3.Dot(this.transform.forward, bounce) < Vector3.Dot(this.transform.forward, maxBounce))
                 maxBounce = bounce;
         }
 

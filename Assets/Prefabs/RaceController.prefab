@@ -47,8 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 2855807404826155443, guid: 35aedf3c247c9674791db78719fdb118, type: 3}
   Player: {fileID: 1090839643107180997, guid: 17d088badf4cf5145b6cc3261a54eb0c, type: 3}
-  AI: {fileID: 0}
+  AI: {fileID: 7171308497548649729, guid: c45120b12794b524eb7513ecdc9e8424, type: 3}
   startLine: {fileID: 5518859712283160481}
+  totalRacers: 8
   raceStartTime: 2
   startPositioning: {x: 10, y: 20, z: 10}
   positionUpdateFrequency: 60

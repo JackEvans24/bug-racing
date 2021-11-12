@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 8492376020432378954}
   m_Layer: 10
   m_Name: Body Collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2960,6 +2960,9 @@ GameObject:
   - component: {fileID: 2708678448927574785}
   - component: {fileID: 9108445715451110268}
   - component: {fileID: 7829204439998605891}
+  - component: {fileID: 3057265793643339620}
+  - component: {fileID: 8934626304404297114}
+  - component: {fileID: 8436688769059838900}
   m_Layer: 6
   m_Name: AI
   m_TagString: Player
@@ -3124,6 +3127,45 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 4.2}
+--- !u!65 &3057265793643339620
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7171308497548649729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 4, z: 10}
+  m_Center: {x: 2, y: 0, z: -1}
+--- !u!65 &8934626304404297114
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7171308497548649729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 4, z: 10}
+  m_Center: {x: -2, y: 0, z: -1}
+--- !u!65 &8436688769059838900
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7171308497548649729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 4, z: 0.2}
+  m_Center: {x: 0, y: 0, z: -6}
 --- !u!1 &7171308497593351594
 GameObject:
   m_ObjectHideFlags: 0

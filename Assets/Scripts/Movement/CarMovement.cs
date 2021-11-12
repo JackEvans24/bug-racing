@@ -12,6 +12,7 @@ public class CarMovement : MonoBehaviour
     public bool IsAi = false;
     public bool CanMove = false;
     public int CurrentPosition;
+    [NonSerialized] public RaceTextController TextController;
 
     [Header("References")]
     [SerializeField] private Collider bodyCollider;
@@ -212,6 +213,12 @@ public class CarMovement : MonoBehaviour
         this.LapsCompleted++;
 
         if (this.LapsCompleted == CheckpointManager.TotalLaps)
-            RaceManager.LogFinish(this);
+        {
+            RaceManager.LogFinish(this, out int finalPosition);
+            if (this.TextController != null)
+                StartCoroutine(this.TextController.ShowRaceEnd(finalPosition));
+        }
+        else if (this.TextController != null)
+            StartCoroutine(this.TextController.ShowLap(this.LapsCompleted + 1));
     }
 }

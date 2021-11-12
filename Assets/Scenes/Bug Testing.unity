@@ -1025,7 +1025,7 @@ PrefabInstance:
       objectReference: {fileID: 7171308497548649729, guid: c45120b12794b524eb7513ecdc9e8424, type: 3}
     - target: {fileID: 5412294130925925059, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
       propertyPath: totalRacers
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5412294130925925060, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
       propertyPath: m_RootOrder
