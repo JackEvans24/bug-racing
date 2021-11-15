@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 0ef82a4b5d28e6a4ca52b02277cace07
+  - enabled: 1
     path: Assets/Scenes/Oak Highway.unity
     guid: 9e0c432efe8c5b841bbc20f63e72923d
   m_configObjects: {}
