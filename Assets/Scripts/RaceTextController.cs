@@ -28,7 +28,7 @@ public class RaceTextController : MonoBehaviour
     public IEnumerator ShowRaceReady()
     {
         this.canvas.alpha = 0;
-        this.textField.text = "READY";
+        this.textField.text = "Ready";
         var originalScale = this.textField.transform.localScale;
 
         var scalingTween = this.textField.transform.DOScale(this.textField.transform.localScale * this.readyGrowSize, this.readyFadeTime * 3);
@@ -50,7 +50,7 @@ public class RaceTextController : MonoBehaviour
     public IEnumerator ShowRaceStart()
     {
         this.canvas.alpha = 0;
-        this.textField.text = "GO";
+        this.textField.text = "Go";
 
         yield return new WaitForEndOfFrame();
         this.canvas.alpha = 1;
@@ -64,7 +64,7 @@ public class RaceTextController : MonoBehaviour
     public IEnumerator ShowLap(int lap)
     {
         this.canvas.alpha = 0;
-        this.textField.text = $"LAP {lap}";
+        this.textField.text = $"Lap {lap}";
 
         var tween = this.canvas.DOFade(1f, this.lapFadeTime);
         yield return tween.WaitForCompletion();
@@ -79,14 +79,9 @@ public class RaceTextController : MonoBehaviour
     {
         this.canvas.alpha = 0;
         var positionText = PositionHelpers.GetPositionText(position);
-        this.textField.text = $"FINISHED!\r\n{positionText}";
+        this.textField.text = $"Finished!\r\n{positionText}";
 
         var tween = this.canvas.DOFade(1f, this.finishFadeTime);
-        yield return tween.WaitForCompletion();
-
-        yield return new WaitForSeconds(this.finishSustainTime);
-
-        tween = this.canvas.DOFade(0f, this.finishFadeTime);
         yield return tween.WaitForCompletion();
     }
 }
