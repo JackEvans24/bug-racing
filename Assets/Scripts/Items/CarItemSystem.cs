@@ -33,7 +33,7 @@ public class CarItemSystem : MonoBehaviour
 
     public void UseCurrentItem()
     {
-        if (this.CurrentItems.Count <= 0 || this.usingItem)
+        if (this.CurrentItems.Count <= 0 || this.usingItem || this.movement.IsStunned)
             return;
 
         this.usingItem = true;

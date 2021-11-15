@@ -13,6 +13,7 @@ public class CarMovement : MonoBehaviour
     public bool CanMove = false;
     public int CurrentPosition;
     [NonSerialized] public RaceTextController TextController;
+    public bool IsStunned { get => this.currentStunTime <= this.stunTime; }
 
     [Header("References")]
     [SerializeField] private Collider bodyCollider;
