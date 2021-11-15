@@ -11,11 +11,13 @@ public class HUDUpdater : MonoBehaviour
     [SerializeField] private TMP_Text lapText;
     [SerializeField] private TMP_Text positionText;
     [SerializeField] private TMP_Text itemText;
+    [SerializeField] private Canvas hudCanvas;
 
     private int totalLaps;
     private int currentLap;
     private int currentPosition;
     private ItemData currentItem;
+    private bool raceFinished = false;
 
     private void Start()
     {
@@ -24,9 +26,19 @@ public class HUDUpdater : MonoBehaviour
 
     private void Update()
     {
+        if (raceFinished)
+            return;
+
         if (currentLap != car.LapsCompleted + 1)
         {
             this.currentLap = car.LapsCompleted + 1;
+
+            if (currentLap > CheckpointManager.TotalLaps)
+            {
+                this.FinishRace();
+                return;
+            }
+
             this.lapText.text = $"Lap {this.currentLap}/{this.totalLaps}";
         }
 
@@ -50,5 +62,12 @@ public class HUDUpdater : MonoBehaviour
     {
         this.currentItem = item;
         this.itemText.text = item == null ? string.Empty : item.itemName;
+    }
+
+    private void FinishRace()
+    {
+        this.raceFinished = true;
+        this.hudCanvas.enabled = false;
+        this.enabled = false;
     }
 }
