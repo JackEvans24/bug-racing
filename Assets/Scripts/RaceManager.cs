@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RaceManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private GameObject Player;
     [SerializeField] private GameObject AI;
     [SerializeField] private Transform startLine;
+    [SerializeField] private MusicLoop music;
 
     [Header("Race Start")]
     [SerializeField] private int totalRacers = 8;
@@ -129,6 +131,8 @@ public class RaceManager : MonoBehaviour
         foreach (var racer in this.racers)
             racer.CanMove = true;
 
+        this.music.Play();
+
         for (int i = 0; i < this.raceTextControllers.Count; i++)
         {
             var controller = this.raceTextControllers[i];
@@ -142,7 +146,7 @@ public class RaceManager : MonoBehaviour
         Debug.Log($"Race complete!");
 
         yield return new WaitForSeconds(5);
-        Application.Quit();
+        SceneManager.LoadScene((int)Scenes.Menu);
     }
 
     private void UpdatePositions()
