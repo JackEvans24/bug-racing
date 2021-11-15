@@ -10,5 +10,7 @@ public abstract class Item : MonoBehaviour
             Destroy(this.gameObject);
         else if (other.CompareTag(Tags.OUT_OF_BOUNDS))
             Destroy(this.gameObject);
+        else if (other.CompareTag(Tags.HAZARD))
+            Destroy(this.gameObject);
     }
 }
