@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74515ffb2705bac4ea120f2f842b46c9, type: 3}
   m_Name: OakHighway
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: f417e69e0fb3a1b4da77c1b97ac8bb7d, type: 3}
+  Clip: {fileID: 8300000, guid: 899d3a4ace3b8f74cb8c6139d061f4a7, type: 3}
   BPM: 136
   TimeSignature: 4
   BarsLength: 24
