@@ -28,6 +28,11 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float aerialTurnSpeed = 0.2f;
     [SerializeField] private float rotationSmoothing = 1f;
 
+    [Header("Boost")]
+    [SerializeField] private Raycaster[] boostChecks;
+    [SerializeField] private float boostSpeed = 1f;
+    [SerializeField] private float boostTime = 1f;
+
     [Header("Drag")]
     [SerializeField] private float groundDrag = 4f;
     [SerializeField] private float airDrag = 0.1f;
@@ -41,7 +46,7 @@ public class CarMovement : MonoBehaviour
 
     private Rigidbody rb;
     private float forwardMovement, turnAmount, velocity;
-    private float stunTime, currentStunTime;
+    private float stunTime, currentStunTime, currentBoostTime;
     private bool isGrounded;
 
     public void SetMovement(float forward, float turnAmount)
@@ -56,6 +61,7 @@ public class CarMovement : MonoBehaviour
         this.rb.transform.parent = null;
 
         this.currentStunTime = this.stunTime + 1f;
+        this.currentBoostTime = this.boostTime + 1f;
     }
 
     private void Start()
@@ -65,7 +71,7 @@ public class CarMovement : MonoBehaviour
 
     private void Update()
     {
-        this.UpdateStunTime();
+        this.UpdateTimeVariables();
 
         if (!this.CanMove || this.currentStunTime <= this.stunTime)
             return;
@@ -118,11 +124,19 @@ public class CarMovement : MonoBehaviour
 
     private float GetVelocity()
     {
+        // Check boost
+        if (this.boostChecks.Any(c => c.Hit.transform != null))
+            this.currentBoostTime = 0;
+        if (this.currentBoostTime <= this.boostTime)
+            return this.boostSpeed * 100;
+
+        // Check grounded
         if (!this.isGrounded)
             return 0f;
 
         var activeSpeed = this.forwardMovement > 0 ? this.forwardSpeed : this.reverseSpeed;
 
+        // Check slow ground
         if (mainGroundCheck.Hit.transform != null && mainGroundCheck.Hit.transform.CompareTag(Tags.SLOW_GROUND))
             activeSpeed *= this.slowGroundModifier;
 
@@ -164,10 +178,12 @@ public class CarMovement : MonoBehaviour
         this.currentStunTime = 0;
     }
 
-    private void UpdateStunTime()
+    private void UpdateTimeVariables()
     {
         if (this.currentStunTime <= this.stunTime)
             this.currentStunTime += Time.deltaTime;
+        if (this.currentBoostTime <= this.boostTime)
+            this.currentBoostTime += Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
