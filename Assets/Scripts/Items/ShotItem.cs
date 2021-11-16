@@ -23,20 +23,13 @@ public class ShotItem : Item
 
     private void Update()
     {
-        //var floorNormal = this.GetFloorNormal();
-        //this.transform.rotation = Quaternion.FromToRotation(transform.up, floorNormal) * transform.rotation;
-
         this.Bounce();
     }
 
     private void FixedUpdate()
     {
-        if (!this.groundChecks.Any(g => g.Hit.transform != null))
-        {
-            //var floorNormal = this.GetFloorNormal();
-            //this.rb.AddForce(floorNormal.normalized * this.gravity * -100);
+        if (this.groundChecks.All(g => g.Hit.transform == null))
             this.rb.AddForce(this.transform.up * this.gravity * -100);
-        }
 
         this.rb.velocity = this.transform.forward * this.velocity;
     }
@@ -51,21 +44,6 @@ public class ShotItem : Item
         }
 
         base.OnTriggerEnter(other);
-    }
-
-    private Vector3 GetFloorNormal()
-    {
-        var result = this.transform.up;
-
-        foreach (var groundCheck in this.groundChecks)
-        {
-            if (groundCheck.Hit.transform != null)
-                result += groundCheck.Hit.normal;
-        }
-
-        Debug.DrawLine(this.transform.position, this.transform.position + result, Color.red);
-
-        return result;
     }
 
     private void Bounce()

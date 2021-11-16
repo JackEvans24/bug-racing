@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 4
-  distance: 3
+  distance: 5
   layers:
     serializedVersion: 2
     m_Bits: 2688
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 4
-  distance: 3
+  distance: 5
   layers:
     serializedVersion: 2
     m_Bits: 2688
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 4
-  distance: 3
+  distance: 5
   layers:
     serializedVersion: 2
     m_Bits: 2688
@@ -538,7 +538,11 @@ MonoBehaviour:
   - {fileID: 6711268167809582775}
   - {fileID: 3425761616495871036}
   - {fileID: 2108510160005255211}
-  forwardChecks: []
+  forwardChecks:
+  - {fileID: 818157663722520359}
+  - {fileID: 7898768354851559752}
+  - {fileID: 4931436442532532462}
+  - {fileID: 4041930265525700248}
   velocity: 120
   lifetime: 5
   gravity: 0.6
@@ -638,7 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 4
-  distance: 3
+  distance: 5
   layers:
     serializedVersion: 2
     m_Bits: 2688
