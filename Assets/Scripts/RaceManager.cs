@@ -22,8 +22,8 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private MusicLoop music;
 
     [Header("Race Start")]
-    [SerializeField] private int totalRacers = 8;
     [SerializeField] private Vector3 startPositioning;
+    [SerializeField] private int totalRacers = 8;
 
     [Header("Race position")]
     [SerializeField] private int positionUpdateFrequency = 5;
@@ -45,7 +45,7 @@ public class RaceManager : MonoBehaviour
 
     private void Start()
     {
-        this.RaceSetup(1, this.totalRacers);
+        this.RaceSetup(GameController.Players, this.totalRacers);
     }
 
     private void Update()
@@ -61,51 +61,72 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    public void RaceSetup(int playerCount = 1, int totalRacerCount = 8)
+    private void RaceSetup(PlayerSelection[] players, int totalRacerCount)
     {
         this.totalRacerCount = totalRacerCount;
-        this.GenerateRacers(playerCount);
+
+        this.GenerateAiRacers(totalRacerCount - players.Length);
+        this.GeneratePlayers(players, totalRacerCount);
 
         this.setupComplete = true;
         StartCoroutine(this.StartRace());
     }
 
-    private void GenerateRacers(int playerCount)
+    private void GenerateAiRacers(int racerCount)
     {
         this.racers = new List<CarMovement>();
-        this.raceTextControllers = new List<RaceTextController>();
 
-        var aiRacerCount = this.totalRacerCount - playerCount;
-        for (int i = 0; i < this.totalRacerCount; i++)
+        for (int i = 0; i < racerCount; i++)
         {
             var position = this.GetPosition(i);
 
-            var isPlayer = i >= aiRacerCount;
-            var obj = isPlayer ? this.Player : this.AI;
-
-            var racer = Instantiate(obj, position, this.startLine.rotation);
+            var racer = Instantiate(this.AI, position, this.startLine.rotation);
             var carMovement = racer.GetComponent<CarMovement>();
-
-            if (isPlayer)
-            {
-                var camera = Instantiate(this.Camera);
-
-                var cameraFollow = camera.GetComponent<CameraFollow>();
-                cameraFollow.target = racer.transform;
-
-                var hud = camera.GetComponent<HUDUpdater>();
-                hud.car = carMovement;
-                hud.itemSystem = racer.GetComponent<CarItemSystem>();
-
-                var textController = camera.GetComponentInChildren<RaceTextController>();
-                carMovement.TextController = textController;
-                this.raceTextControllers.Add(textController);
-            }
 
             this.racers.Add(carMovement);
         }
     }
 
+    private void GeneratePlayers(PlayerSelection[] players, int totalRacerCount)
+    {
+        if (racers == null)
+            this.racers = new List<CarMovement>();
+        this.raceTextControllers = new List<RaceTextController>();
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            var position = this.GetPosition(totalRacerCount - (players.Length - i));
+
+            var racer = Instantiate(this.Player, position, this.startLine.rotation);
+            var carMovement = racer.GetComponent<CarMovement>();
+
+            // Set up camera
+            var camera = Instantiate(this.Camera);
+            var cameraFollow = camera.GetComponent<CameraFollow>();
+            cameraFollow.target = racer.transform;
+
+            // Set up HUD
+            var hud = camera.GetComponent<HUDUpdater>();
+            hud.car = carMovement;
+            hud.itemSystem = racer.GetComponent<CarItemSystem>();
+
+            // Set up canvas
+            var textController = camera.GetComponentInChildren<RaceTextController>();
+            carMovement.TextController = textController;
+
+            // Set up player skin
+            var player = players[i];
+            var mesh = racer.GetComponentInChildren<SkinnedMeshRenderer>();
+            mesh.sharedMesh = player.BodyModel;
+            mesh.materials[0].color = player.MainColor;
+            mesh.materials[1].color = player.AccentColor;
+
+            this.racers.Add(carMovement);
+            this.raceTextControllers.Add(textController);
+        }
+    }
+
+    
     private Vector3 GetPosition(int i)
     {
         var xCoefficient = i % 2f == 0f ? -1 : 1;
@@ -177,7 +198,13 @@ public class RaceManager : MonoBehaviour
             StartCoroutine(this.EndRace());
     }
 
-    public static bool TryGetPosition(CarMovement car, out int position) => _instance.TryGetPositionLocal(car, out position);
+    public static bool TryGetPosition(CarMovement car, out int position)
+    {
+        position = -1;
+        if (!_instance) return false;
+
+        return _instance.TryGetPositionLocal(car, out position);
+    }
 
     private bool TryGetPositionLocal(CarMovement car, out int position)
     {

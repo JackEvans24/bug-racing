@@ -94,6 +94,8 @@ public class AIController : MonoBehaviour
     private float GetMinTurnAngle()
     {
         var checkpoint = this.movement.NextCheckpoint;
+        if (checkpoint == null)
+            return 0f;
 
         var minAngle = Vector3.SignedAngle(this.transform.forward, checkpoint.MinimumBoundary - this.transform.position, transform.up);
         var maxAngle = Vector3.SignedAngle(this.transform.forward, checkpoint.MaximumBoundary - this.transform.position, transform.up);
