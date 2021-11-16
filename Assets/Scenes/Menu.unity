@@ -1852,7 +1852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &726799453
 Transform:
   m_ObjectHideFlags: 0
@@ -5524,7 +5524,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 355015048}
   defaultButton: {fileID: 495837721}
-  bugDisplay: {fileID: 726799452}
   mesh: {fileID: 1200165610}
   colors:
   - {r: 0.7735849, g: 0, b: 0, a: 0}

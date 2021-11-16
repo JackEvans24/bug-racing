@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5412294130925925060}
   - component: {fileID: 5412294130925925059}
-  - component: {fileID: 5412294130925925061}
   m_Layer: 0
   m_Name: RaceController
   m_TagString: Untagged
@@ -51,24 +50,9 @@ MonoBehaviour:
   AI: {fileID: 7171308497548649729, guid: c45120b12794b524eb7513ecdc9e8424, type: 3}
   startLine: {fileID: 5518859712283160481}
   music: {fileID: 6085374676900762692}
-  totalRacers: 8
   startPositioning: {x: 10, y: 20, z: 10}
+  totalRacers: 8
   positionUpdateFrequency: 60
---- !u!114 &5412294130925925061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5412294130925925058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28508eb53131f294caa2236d3f777f4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items:
-  - {fileID: 11400000, guid: 9d56bc6f48568b0408dbdfecdf6be332, type: 2}
-  - {fileID: 11400000, guid: 06ab0eb0c7b37a440bd8f0ae121e292d, type: 2}
 --- !u!1 &8904838866824227522
 GameObject:
   m_ObjectHideFlags: 0
