@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CarMovement))]
 [RequireComponent(typeof(CarItemSystem))]
 public class PlayerController : MonoBehaviour
 {
+    [NonSerialized] public CameraFollow CameraFollow;
+
     private CarMovement movement;
     private CarItemSystem itemSystem;
 
@@ -27,5 +27,8 @@ public class PlayerController : MonoBehaviour
         // Item
         if (Input.GetButtonDown(InputButtons.USE_ITEM))
             this.itemSystem.UseCurrentItem();
+
+        // Camera
+        this.CameraFollow.ReverseView = Input.GetButton(InputButtons.REVERSE_VIEW);
     }
 }

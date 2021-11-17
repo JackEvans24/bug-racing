@@ -98,12 +98,14 @@ public class RaceManager : MonoBehaviour
             var position = this.GetPosition(totalRacerCount - (players.Length - i));
 
             var racer = Instantiate(this.Player, position, this.startLine.rotation);
+            var playerController = racer.GetComponent<PlayerController>();
             var carMovement = racer.GetComponent<CarMovement>();
 
             // Set up camera
             var camera = Instantiate(this.Camera);
             var cameraFollow = camera.GetComponent<CameraFollow>();
             cameraFollow.target = racer.transform;
+            playerController.CameraFollow = cameraFollow;
 
             // Set up HUD
             var hud = camera.GetComponent<HUDUpdater>();

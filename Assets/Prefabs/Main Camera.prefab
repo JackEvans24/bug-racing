@@ -662,6 +662,9 @@ MonoBehaviour:
   distance: 10
   height: 20
   lookHeight: 15
+  reverseSmoothing: 0.1
+  reverseDistance: 30
+  reverseHeight: 15
 --- !u!114 &1218728546855957130
 MonoBehaviour:
   m_ObjectHideFlags: 0
