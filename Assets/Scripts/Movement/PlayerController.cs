@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CarMovement))]
 [RequireComponent(typeof(CarItemSystem))]
@@ -10,25 +11,36 @@ public class PlayerController : MonoBehaviour
     private CarMovement movement;
     private CarItemSystem itemSystem;
 
+    private PlayerInput input;
+    private InputActionMap actions;
+
     private void Awake()
     {
         this.movement = GetComponent<CarMovement>();
         this.itemSystem = GetComponent<CarItemSystem>();
+        this.input = GetComponent<PlayerInput>();
+
+        this.SetUpInputEvents();
+    }
+
+    private void SetUpInputEvents()
+    {
+        actions = this.input.actions.FindActionMap(InputMaps.RACING);
+
+        var item = actions.FindAction(InputButtons.USE_ITEM);
+        item.started += (_obj) => this.itemSystem.UseCurrentItem();
+
+        var cameraReverse = actions.FindAction(InputButtons.REVERSE_VIEW);
+        cameraReverse.started += (_obj) => this.SetCameraReverse(true);
+        cameraReverse.canceled += (_obj) => this.SetCameraReverse(false);
     }
 
     private void Update()
     {
         // Movement
-        var forwardMovement = Input.GetAxis(InputButtons.VERTICAL);
-        var turnAmount = Input.GetAxis(InputButtons.HORIZONTAL);
-
-        this.movement.SetMovement(forwardMovement, turnAmount);
-
-        // Item
-        if (Input.GetButtonDown(InputButtons.USE_ITEM))
-            this.itemSystem.UseCurrentItem();
-
-        // Camera
-        this.CameraFollow.ReverseView = Input.GetButton(InputButtons.REVERSE_VIEW);
+        var currentMovement = actions.FindAction(InputButtons.MOVE).ReadValue<Vector2>();
+        this.movement.SetMovement(currentMovement.y, currentMovement.x);
     }
+
+    private void SetCameraReverse(bool reverse) => this.CameraFollow.ReverseView = reverse;
 }
