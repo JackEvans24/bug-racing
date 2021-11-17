@@ -2,12 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(AIController))]
 [RequireComponent(typeof(CarMovement))]
 [RequireComponent(typeof(CarItemSystem))]
 public class PlayerController : MonoBehaviour
 {
     [NonSerialized] public CameraFollow CameraFollow;
 
+    private AIController ai;
     private CarMovement movement;
     private CarItemSystem itemSystem;
 
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        this.ai = GetComponent<AIController>();
         this.movement = GetComponent<CarMovement>();
         this.itemSystem = GetComponent<CarItemSystem>();
         this.input = GetComponent<PlayerInput>();
@@ -43,4 +46,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void SetCameraReverse(bool reverse) => this.CameraFollow.ReverseView = reverse;
+
+    public void RaceComplete()
+    {
+        this.ai.enabled = true;
+        this.enabled = false;
+    }
 }

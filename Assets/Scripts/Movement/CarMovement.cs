@@ -230,12 +230,20 @@ public class CarMovement : MonoBehaviour
         this.LapsCompleted++;
 
         if (this.LapsCompleted == CheckpointManager.TotalLaps)
-        {
-            RaceManager.LogFinish(this, out int finalPosition);
-            if (this.TextController != null)
-                StartCoroutine(this.TextController.ShowRaceEnd(finalPosition));
-        }
+            this.EndOfRace();
         else if (this.TextController != null)
             StartCoroutine(this.TextController.ShowLap(this.LapsCompleted + 1));
+    }
+
+    private void EndOfRace()
+    {
+        RaceManager.LogFinish(this, out int finalPosition);
+
+        var player = GetComponent<PlayerController>();
+        if (player != null)
+            player.RaceComplete();
+
+        if (this.TextController != null)
+            StartCoroutine(this.TextController.ShowRaceEnd(finalPosition));
     }
 }
