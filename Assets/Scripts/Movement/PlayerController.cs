@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [NonSerialized] public CameraFollow CameraFollow;
 
     private AIController ai;
+    [SerializeField] private GameObject[] aiObjects;
+
     private CarMovement movement;
     private CarItemSystem itemSystem;
 
@@ -41,8 +43,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         // Movement
-        var currentMovement = actions.FindAction(InputButtons.MOVE).ReadValue<Vector2>();
-        this.movement.SetMovement(currentMovement.y, currentMovement.x);
+        var horizontalMovement = actions.FindAction(InputButtons.HORIZONTAL).ReadValue<float>();
+        var verticalMovement = actions.FindAction(InputButtons.VERTICAL).ReadValue<float>();
+
+        this.movement.SetMovement(verticalMovement, horizontalMovement);
     }
 
     private void SetCameraReverse(bool reverse) => this.CameraFollow.ReverseView = reverse;
@@ -50,6 +54,10 @@ public class PlayerController : MonoBehaviour
     public void RaceComplete()
     {
         this.ai.enabled = true;
+
+        foreach (var obj in this.aiObjects)
+            obj.SetActive(true);
+
         this.enabled = false;
     }
 }

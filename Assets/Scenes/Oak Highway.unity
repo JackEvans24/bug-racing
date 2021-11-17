@@ -865,7 +865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2347487112079985558, guid: a7bde680fc69d374eb7e2310ddf40586, type: 3}
       propertyPath: laps
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2347487112079985558, guid: a7bde680fc69d374eb7e2310ddf40586, type: 3}
       propertyPath: startCheckpoint
