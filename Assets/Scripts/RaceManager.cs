@@ -21,6 +21,11 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private Transform startLine;
     [SerializeField] private MusicLoop music;
 
+    [Header("Race Variables")]
+    [SerializeField] private Color backgroundColor;
+    [ColorUsage(showAlpha: true, hdr: true)]
+    [SerializeField] private Color lightingColor;
+
     [Header("Race Start")]
     [SerializeField] private Vector3 startPositioning;
     [SerializeField] private int totalRacers = 8;
@@ -65,6 +70,8 @@ public class RaceManager : MonoBehaviour
     {
         this.totalRacerCount = totalRacerCount;
 
+        RenderSettings.ambientLight = this.lightingColor;
+
         this.GenerateAiRacers(totalRacerCount - players.Length);
         this.GeneratePlayers(players, totalRacerCount);
 
@@ -102,7 +109,8 @@ public class RaceManager : MonoBehaviour
             var carMovement = racer.GetComponent<CarMovement>();
 
             // Set up camera
-            var camera = Instantiate(this.Camera);
+            var camera = Instantiate(this.Camera).GetComponent<Camera>();
+            camera.backgroundColor = this.backgroundColor;
             var cameraFollow = camera.GetComponent<CameraFollow>();
             cameraFollow.target = racer.transform;
             playerController.CameraFollow = cameraFollow;
