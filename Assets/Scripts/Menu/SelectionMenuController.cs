@@ -21,6 +21,7 @@ public class SelectionMenuController : MonoBehaviour
 
     private void Start()
     {
+        this.currentSecondaryMaterialIndex = this.colors.Length - 1;
         this.SetVariables();
     }
 
