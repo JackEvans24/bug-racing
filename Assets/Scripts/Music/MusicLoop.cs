@@ -5,6 +5,7 @@ public class MusicLoop : MonoBehaviour
 {
     private AudioSource[] sources;
     [SerializeField] private MusicTrack track;
+    [SerializeField] private bool playOnAwake;
 
     private bool loopStarted;
     private int sourceIndex;
@@ -16,6 +17,9 @@ public class MusicLoop : MonoBehaviour
 
         foreach (var source in this.sources)
             source.clip = this.track.Clip;
+
+        if (playOnAwake)
+            this.Play();
     }
 
     public void Play()
