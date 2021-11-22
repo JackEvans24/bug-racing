@@ -9,6 +9,7 @@ TagManager:
   - OutOfBounds
   - Hazard
   - Item Box
+  - Player Selection
   layers:
   - Default
   - TransparentFX
