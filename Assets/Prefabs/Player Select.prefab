@@ -5197,9 +5197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f222833d3f169488dd8ab16d180eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8519699137607440670}
-  inputManager: {fileID: 0}
-  input: {fileID: 9168127467612861237}
+  Input: {fileID: 9168127467612861237}
   eventSystem: {fileID: 6834520442794336313}
   menuCanvas: {fileID: 2969100228450618998}
   readyCanvas: {fileID: 581337371310668887}
@@ -5208,6 +5206,14 @@ MonoBehaviour:
   backButton: {fileID: 2969100229333976538}
   buttonPadding: {fileID: 2969100227855391053}
   Mesh: {fileID: 7340805219085642553}
+  accentPreviousButton: {fileID: 2969100228087267275}
+  alternateAccentPreviousNavigation:
+    m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 2969100227653279219}
+    m_SelectOnDown: {fileID: 2969100228911859551}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 2969100227986906272}
   colors:
   - {r: 0.7735849, g: 0, b: 0, a: 0}
   - {r: 0.9245283, g: 0.3568926, b: 0, a: 0}

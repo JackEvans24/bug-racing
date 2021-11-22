@@ -12,12 +12,18 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private PlayerInputManager inputManager;
 
     [Header("Multiplayer")]
-    [SerializeField] private int maxPlayers = 2;
-    [SerializeField] private float rejoinTimeout = 2;
-    private List<PlayerInput> currentInputs = new List<PlayerInput>();
-    private bool menuIsActive = true;
+    [SerializeField] private float rejoinTimeout = 0.5f;
+    private List<PlayerInput> currentInputs;
+    private bool menuIsActive;
 
-    private List<PlayerSelection> selectedPlayers = new List<PlayerSelection>();
+    private List<PlayerSelection> selectedPlayers;
+
+    private void Awake()
+    {
+        this.menuIsActive = true;
+        this.currentInputs = new List<PlayerInput>();
+        this.selectedPlayers = new List<PlayerSelection>();
+    }
 
     public void PlayerJoined(PlayerInput input)
     {
@@ -27,9 +33,6 @@ public class MainMenuController : MonoBehaviour
         {
             this.mainMenu.SetActive(false);
             this.mainCamera.gameObject.SetActive(false);
-
-            //var menu = input.GetComponent<SelectionMenuController>();
-            //menu.SetBackButtonEnabled(false);
 
             menuIsActive = false;
         }
@@ -44,9 +47,6 @@ public class MainMenuController : MonoBehaviour
             this.mainMenu.SetActive(true);
             if (this.mainCamera != null)
                 this.mainCamera.gameObject.SetActive(true);
-
-            //var menu = input.GetComponent<SelectionMenuController>();
-            //menu.SetBackButtonEnabled(true);
 
             menuIsActive = true;
         }
@@ -86,9 +86,6 @@ public class MainMenuController : MonoBehaviour
 
     public void StartRace()
     {
-        //var menu = this.currentInputs[0].GetComponent<SelectionMenuController>();
-        //menu.SetBackButtonEnabled(true);
-
         GameController.SetPlayersAndPlay(this.selectedPlayers, Scenes.OakHighway);
     }
 

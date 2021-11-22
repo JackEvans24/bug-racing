@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SelectionMenuController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject player;
-    [SerializeField] private PlayerInputManager inputManager;
-    [SerializeField] private PlayerInput input;
+    public PlayerInput Input;
     [SerializeField] private EventSystem eventSystem;
 
     [Header("Canvas References")]
@@ -20,6 +19,10 @@ public class SelectionMenuController : MonoBehaviour
     public SkinnedMeshRenderer Mesh;
     private MainMenuController mainMenu;
 
+    [Header("Back button hidden")]
+    [SerializeField] private Button accentPreviousButton;
+    [SerializeField] private Navigation alternateAccentPreviousNavigation;
+
     [Header("Variables")]
     [SerializeField] private Color[] colors;
     [SerializeField] private PlayerBodyModel[] bodies;
@@ -31,6 +34,10 @@ public class SelectionMenuController : MonoBehaviour
     private void Awake()
     {
         this.mainMenu = FindObjectOfType<MainMenuController>();
+
+        var allSelectionMenus = FindObjectsOfType<SelectionMenuController>();
+        if (allSelectionMenus.Length > 1)
+            this.SetBackButtonEnabled(false);
     }
 
     private void Start()
@@ -39,10 +46,12 @@ public class SelectionMenuController : MonoBehaviour
         this.SetVariables();
     }
 
-    public void SetBackButtonEnabled(bool enabled)
+    private void SetBackButtonEnabled(bool enabled)
     {
         this.backButton.SetActive(enabled);
         this.buttonPadding.SetActive(enabled);
+
+        this.accentPreviousButton.navigation = this.alternateAccentPreviousNavigation;
     }
 
     private void OnEnable()
@@ -131,7 +140,7 @@ public class SelectionMenuController : MonoBehaviour
 
     public void UnReady()
     {
-        this.mainMenu.Unready(this.input.devices[0]);
+        this.mainMenu.Unready(this.Input.devices[0]);
 
         this.readyCanvas.SetActive(false);
         this.menuCanvas.SetActive(true);
@@ -145,7 +154,7 @@ public class SelectionMenuController : MonoBehaviour
             BodyModel = this.bodies[this.currentBodyIndex].Body,
             MainColor = this.colors[this.currentPrimaryMaterialIndex],
             AccentColor = this.colors[this.currentSecondaryMaterialIndex],
-            Device = this.input.devices[0]
+            Device = this.Input.devices[0]
         };
 
     public void BackToMenu()
