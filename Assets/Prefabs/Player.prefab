@@ -1528,6 +1528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf67a5d0daa601a4191062ea80a6a6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CameraFollow: {fileID: 0}
   aiObjects:
   - {fileID: 3837024784172315191}
   - {fileID: 6928449638659238386}
@@ -1611,6 +1612,7 @@ MonoBehaviour:
   - {fileID: 1090839644203645591}
   - {fileID: 1090839643341154675}
   - {fileID: 1090839643718980412}
+  TextController: {fileID: 0}
   forwardSpeed: 2.4
   reverseSpeed: 0.6
   turnSpeed: 0.6

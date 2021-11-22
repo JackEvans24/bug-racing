@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CarItemSystem))]
 public class PlayerController : MonoBehaviour
 {
-    [NonSerialized] public CameraFollow CameraFollow;
+    public CameraFollow CameraFollow;
 
     private AIController ai;
     [SerializeField] private GameObject[] aiObjects;

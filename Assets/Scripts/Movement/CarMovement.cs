@@ -12,7 +12,6 @@ public class CarMovement : MonoBehaviour
     public bool IsAi = false;
     public bool CanMove = false;
     public int CurrentPosition;
-    [NonSerialized] public RaceTextController TextController;
     public bool IsStunned { get => this.currentStunTime <= this.stunTime; }
 
     [Header("References")]
@@ -20,6 +19,7 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private Raycaster mainGroundCheck;
     [SerializeField] private Raycaster[] groundChecks;
     [SerializeField] private Raycaster[] aerialGroundChecks;
+    [SerializeField] private RaceTextController TextController;
 
     [Header("Movement")]
     [SerializeField] private float forwardSpeed = 1f;
@@ -62,6 +62,14 @@ public class CarMovement : MonoBehaviour
 
         this.currentStunTime = this.stunTime + 1f;
         this.currentBoostTime = this.boostTime + 1f;
+    }
+
+    public void MoveTo(Vector3 position)
+    {
+        if (this.rb != null)
+            this.rb.position = position;
+        else
+            this.transform.position = position;
     }
 
     private void Start()
@@ -245,5 +253,11 @@ public class CarMovement : MonoBehaviour
 
         if (this.TextController != null)
             StartCoroutine(this.TextController.ShowRaceEnd(finalPosition));
+    }
+
+    private void OnDestroy()
+    {
+        if (this.rb != null)
+            Destroy(this.rb.gameObject);
     }
 }

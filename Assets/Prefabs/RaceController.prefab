@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5412294130925925060}
   - component: {fileID: 5412294130925925059}
+  - component: {fileID: 2119028942972376330}
   m_Layer: 0
   m_Name: RaceController
   m_TagString: Untagged
@@ -46,13 +47,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 2855807404826155443, guid: 35aedf3c247c9674791db78719fdb118, type: 3}
-  Player: {fileID: 1090839643107180997, guid: 17d088badf4cf5145b6cc3261a54eb0c, type: 3}
+  PlayerContainer: {fileID: 0}
   AI: {fileID: 7171308497548649729, guid: c45120b12794b524eb7513ecdc9e8424, type: 3}
   startLine: {fileID: 5518859712283160481}
   music: {fileID: 6085374676900762692}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  lightingColor: {r: 0, g: 0, b: 0, a: 0}
   startPositioning: {x: 10, y: 20, z: 10}
   totalRacers: 8
   positionUpdateFrequency: 60
+--- !u!114 &2119028942972376330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5412294130925925058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: 2
+  m_AllowJoining: 1
+  m_JoinBehavior: 2
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 6053178919815897581, guid: 028a91e6550e3e44e80def873b8f7543, type: 3}
+  m_SplitScreen: 1
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &8904838866824227522
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,6 +111,7 @@ GameObject:
   - component: {fileID: 2284951276066823770}
   - component: {fileID: 765408054285347451}
   - component: {fileID: 6085374676900762692}
+  - component: {fileID: 7907440323394118322}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -291,6 +338,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   track: {fileID: 11400000, guid: 2f7de987b3114ea44b01c02bbf889ccc, type: 2}
+  playOnAwake: 0
+--- !u!81 &7907440323394118322
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904838866824227522}
+  m_Enabled: 1
 --- !u!1001 &5412294132261931082
 PrefabInstance:
   m_ObjectHideFlags: 0

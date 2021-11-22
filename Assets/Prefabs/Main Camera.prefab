@@ -94,7 +94,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.5
+  m_fontSize: 38.35
   m_fontSizeBase: 48.62
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -439,7 +439,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.5
+  m_fontSize: 38.35
   m_fontSizeBase: 48.62
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -568,7 +568,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2855807404826155446}
   - component: {fileID: 2855807404826155441}
-  - component: {fileID: 2855807404826155440}
   - component: {fileID: 2855807404826155447}
   - component: {fileID: 1218728546855957130}
   m_Layer: 0
@@ -637,14 +636,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2855807404826155440
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2855807404826155443}
-  m_Enabled: 1
 --- !u!114 &2855807404826155447
 MonoBehaviour:
   m_ObjectHideFlags: 0

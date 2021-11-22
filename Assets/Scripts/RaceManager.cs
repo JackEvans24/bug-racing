@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(PlayerInputManager))]
 public class RaceManager : MonoBehaviour
 {
     private static RaceManager _instance;
+
+    private PlayerInputManager inputManager;
 
     private List<CarMovement> racers;
     private Dictionary<CarMovement, int> racePositions = new Dictionary<CarMovement, int>();
@@ -16,7 +20,7 @@ public class RaceManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject Camera;
-    [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject PlayerContainer;
     [SerializeField] private GameObject AI;
     [SerializeField] private Transform startLine;
     [SerializeField] private MusicLoop music;
@@ -46,11 +50,13 @@ public class RaceManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        this.inputManager = GetComponent<PlayerInputManager>();
     }
 
     private void Start()
     {
-        this.RaceSetup(GameController.Players, this.totalRacers);
+        StartCoroutine(this.RaceSetup(GameController.Players, this.totalRacers));
     }
 
     private void Update()
@@ -66,17 +72,19 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    private void RaceSetup(PlayerSelection[] players, int totalRacerCount)
+    private IEnumerator RaceSetup(PlayerSelection[] players, int totalRacerCount)
     {
         this.totalRacerCount = totalRacerCount;
 
         RenderSettings.ambientLight = this.lightingColor;
 
-        this.GenerateAiRacers(totalRacerCount - players.Length);
-        this.GeneratePlayers(players, totalRacerCount);
+        this.GenerateAiRacers(this.totalRacerCount - players.Length);
+        this.GeneratePlayers(players);
+
+        yield return this.PositionRacers();
 
         this.setupComplete = true;
-        StartCoroutine(this.StartRace());
+        yield return this.StartRace();
     }
 
     private void GenerateAiRacers(int racerCount)
@@ -94,7 +102,7 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    private void GeneratePlayers(PlayerSelection[] players, int totalRacerCount)
+    private void GeneratePlayers(PlayerSelection[] players)
     {
         if (racers == null)
             this.racers = new List<CarMovement>();
@@ -102,41 +110,46 @@ public class RaceManager : MonoBehaviour
 
         for (int i = 0; i < players.Length; i++)
         {
-            var position = this.GetPosition(totalRacerCount - (players.Length - i));
-
-            var racer = Instantiate(this.Player, position, this.startLine.rotation);
-            var playerController = racer.GetComponent<PlayerController>();
-            var carMovement = racer.GetComponent<CarMovement>();
+            var player = players[i];
+            var input = this.inputManager.JoinPlayer(playerIndex: i, pairWithDevice: player.Device);
+            var racer = input.transform;
 
             // Set up camera
-            var camera = Instantiate(this.Camera).GetComponent<Camera>();
+            var racerContainer = racer.parent;
+            var camera = racerContainer.GetComponentInChildren<Camera>();
             camera.backgroundColor = this.backgroundColor;
-            var cameraFollow = camera.GetComponent<CameraFollow>();
-            cameraFollow.target = racer.transform;
-            playerController.CameraFollow = cameraFollow;
-
-            // Set up HUD
-            var hud = camera.GetComponent<HUDUpdater>();
-            hud.car = carMovement;
-            hud.itemSystem = racer.GetComponent<CarItemSystem>();
-
-            // Set up canvas
-            var textController = camera.GetComponentInChildren<RaceTextController>();
-            carMovement.TextController = textController;
 
             // Set up player skin
-            var player = players[i];
             var mesh = racer.GetComponentInChildren<SkinnedMeshRenderer>();
             mesh.sharedMesh = player.BodyModel;
             mesh.materials[0].color = player.MainColor;
             mesh.materials[1].color = player.AccentColor;
+
+            // Set up race controller variables
+            var carMovement = racer.GetComponentInChildren<CarMovement>();
+            var textController = racerContainer.GetComponentInChildren<RaceTextController>();
 
             this.racers.Add(carMovement);
             this.raceTextControllers.Add(textController);
         }
     }
 
-    
+    private IEnumerator PositionRacers()
+    {
+        for (int i = 0; i < GameController.PositionWaitFrames; i++)
+            yield return new WaitForEndOfFrame();
+
+        for (int i = 0; i < this.racers.Count; i++)
+        {
+            var position = this.GetPosition(i);
+
+            var racer = this.racers[i];
+
+            racer.MoveTo(position);
+            racer.transform.rotation = this.startLine.rotation;
+        }
+    }
+
     private Vector3 GetPosition(int i)
     {
         var xCoefficient = i % 2f == 0f ? -1 : 1;
@@ -157,6 +170,8 @@ public class RaceManager : MonoBehaviour
             var controller = this.raceTextControllers[i];
             if (i + 1 >= this.raceTextControllers.Count)
                 yield return controller.ShowRaceReady();
+            else
+                StartCoroutine(controller.ShowRaceReady());
         }
 
         foreach (var racer in this.racers)
@@ -169,6 +184,8 @@ public class RaceManager : MonoBehaviour
             var controller = this.raceTextControllers[i];
             if (i + 1 >= this.raceTextControllers.Count)
                 yield return controller.ShowRaceStart();
+            else
+                StartCoroutine(controller.ShowRaceStart());
         }
     }
 

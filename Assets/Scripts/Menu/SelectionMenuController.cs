@@ -1,15 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class SelectionMenuController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject defaultButton;
-    [SerializeField] private SkinnedMeshRenderer mesh;
+    [SerializeField] private GameObject player;
+    [SerializeField] private PlayerInputManager inputManager;
+    [SerializeField] private PlayerInput input;
+    [SerializeField] private EventSystem eventSystem;
+
+    [Header("Canvas References")]
+    [SerializeField] private GameObject menuCanvas;
+    [SerializeField] private GameObject readyCanvas;
+    [SerializeField] private GameObject readyButton;
+    [SerializeField] private GameObject unreadyButton;
+    [SerializeField] private GameObject backButton;
+    [SerializeField] private GameObject buttonPadding;
+    public SkinnedMeshRenderer Mesh;
+    private MainMenuController mainMenu;
 
     [Header("Variables")]
     [SerializeField] private Color[] colors;
@@ -19,25 +28,26 @@ public class SelectionMenuController : MonoBehaviour
     private int currentSecondaryMaterialIndex = 1;
     private int currentBodyIndex = 0;
 
+    private void Awake()
+    {
+        this.mainMenu = FindObjectOfType<MainMenuController>();
+    }
+
     private void Start()
     {
         this.currentSecondaryMaterialIndex = this.colors.Length - 1;
         this.SetVariables();
     }
 
-    private void OnEnable()
+    public void SetBackButtonEnabled(bool enabled)
     {
-        StartCoroutine(this.SetSelectedButton());
-
-        this.SetVariables();
+        this.backButton.SetActive(enabled);
+        this.buttonPadding.SetActive(enabled);
     }
 
-    private IEnumerator SetSelectedButton()
+    private void OnEnable()
     {
-        yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(null);
-        yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(this.defaultButton);
+        this.SetVariables();
     }
 
     public void NextMaterial()
@@ -96,30 +106,50 @@ public class SelectionMenuController : MonoBehaviour
 
     private void SetVariables()
     {
-        var playerBody = this.bodies[this.currentBodyIndex];
-        this.mesh.sharedMesh = playerBody.Body;
+        if (this.Mesh == null)
+            return;
 
-        this.mesh.materials[0].color = this.colors[this.currentPrimaryMaterialIndex];
+        var playerBody = this.bodies[this.currentBodyIndex];
+        this.Mesh.sharedMesh = playerBody.Body;
+
+        this.Mesh.materials[0].color = this.colors[this.currentPrimaryMaterialIndex];
 
         if (playerBody.HasAccent)
-            this.mesh.materials[1].color = this.colors[this.currentSecondaryMaterialIndex];
+            this.Mesh.materials[1].color = this.colors[this.currentSecondaryMaterialIndex];
     }
 
-    public void StartGame()
+    public void Ready()
     {
-        var player = new PlayerSelection()
+        this.mainMenu.Ready(GetPlayer());
+
+        this.menuCanvas.SetActive(false);
+        this.readyCanvas.SetActive(true);
+
+        this.eventSystem.SetSelectedGameObject(null);
+        this.eventSystem.SetSelectedGameObject(this.unreadyButton);
+    }
+
+    public void UnReady()
+    {
+        this.mainMenu.Unready(this.input.devices[0]);
+
+        this.readyCanvas.SetActive(false);
+        this.menuCanvas.SetActive(true);
+
+        this.eventSystem.SetSelectedGameObject(null);
+        this.eventSystem.SetSelectedGameObject(this.readyButton);
+    }
+
+    private PlayerSelection GetPlayer() => new PlayerSelection()
         {
             BodyModel = this.bodies[this.currentBodyIndex].Body,
             MainColor = this.colors[this.currentPrimaryMaterialIndex],
-            AccentColor = this.colors[this.currentSecondaryMaterialIndex]
+            AccentColor = this.colors[this.currentSecondaryMaterialIndex],
+            Device = this.input.devices[0]
         };
-
-        GameController.SetPlayersAndPlay(new[] { player }, Scenes.OakHighway);
-    }
 
     public void BackToMenu()
     {
-        this.mainMenu.SetActive(true);
-        this.gameObject.SetActive(false);
+        this.mainMenu.Back();
     }
 }
