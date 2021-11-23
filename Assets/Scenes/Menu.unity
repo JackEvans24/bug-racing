@@ -2997,7 +2997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   track: {fileID: 11400000, guid: d6e4d6e2f7e3f3c40a8e935cb8882da6, type: 2}
-  playOnAwake: 1
+  playOnStart: 1
 --- !u!82 &1951373089
 AudioSource:
   m_ObjectHideFlags: 0
