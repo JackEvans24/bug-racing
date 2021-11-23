@@ -10,6 +10,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private PlayerInputManager inputManager;
+    [SerializeField] private CanvasGroup controlsView;
+    [SerializeField] private CanvasGroup player2Hint;
 
     [Header("Multiplayer")]
     [SerializeField] private float rejoinTimeout = 0.5f;
@@ -34,8 +36,14 @@ public class MainMenuController : MonoBehaviour
             this.mainMenu.SetActive(false);
             this.mainCamera.gameObject.SetActive(false);
 
+            this.controlsView.alpha = 1;
+            this.player2Hint.alpha = 1;
+
             menuIsActive = false;
         }
+
+        if (this.currentInputs.Count == this.inputManager.maxPlayerCount)
+            this.player2Hint.alpha = 0;
     }
 
     public void PlayerLeft(PlayerInput input)
@@ -48,8 +56,13 @@ public class MainMenuController : MonoBehaviour
             if (this.mainCamera != null)
                 this.mainCamera.gameObject.SetActive(true);
 
+            this.controlsView.alpha = 0;
+            this.player2Hint.alpha = 0;
+
             menuIsActive = true;
         }
+        else
+            this.player2Hint.alpha = 1;
 
         StartCoroutine(this.ReenableJoining());
     }
