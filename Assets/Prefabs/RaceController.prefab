@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 2855807404826155443, guid: 35aedf3c247c9674791db78719fdb118, type: 3}
-  PlayerContainer: {fileID: 0}
+  PlayerContainer: {fileID: 6053178919815897581, guid: 028a91e6550e3e44e80def873b8f7543, type: 3}
   AI: {fileID: 7171308497548649729, guid: c45120b12794b524eb7513ecdc9e8424, type: 3}
   startLine: {fileID: 5518859712283160481}
   music: {fileID: 11400000, guid: 2f7de987b3114ea44b01c02bbf889ccc, type: 2}
