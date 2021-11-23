@@ -6,5 +6,6 @@ public enum Scenes
 {
     Menu,
     OakHighway,
-    Extras
+    Extras,
+    BugTesting
 }
