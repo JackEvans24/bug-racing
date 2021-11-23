@@ -23,6 +23,33 @@ TextureImporter:
   - first:
       213: 7454484266408833828
     second: key-space
+  - first:
+      213: 8072752196819555813
+    second: button-lt
+  - first:
+      213: -7483730852433193336
+    second: button-rt
+  - first:
+      213: 2435405101451986645
+    second: button-lb
+  - first:
+      213: 7388265570304652391
+    second: button-rb
+  - first:
+      213: -2480566475158494610
+    second: key-w
+  - first:
+      213: 6861068753226981190
+    second: key-a
+  - first:
+      213: -4384840472930313557
+    second: key-s
+  - first:
+      213: 6784356719707678480
+    second: key-d
+  - first:
+      213: 110126194611693391
+    second: key-shift
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -278,6 +305,195 @@ TextureImporter:
       bones: []
       spriteID: 423790bd1f5a37760800000000000000
       internalID: 7454484266408833828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-lt
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 112
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e51f2b0a5d280070800000000000000
+      internalID: 8072752196819555813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-rt
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 112
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8869612b072742890800000000000000
+      internalID: -7483730852433193336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-lb
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 113
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d64834590c4cc120800000000000000
+      internalID: 2435405101451986645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: button-rb
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 113
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 764f1483464688660800000000000000
+      internalID: 7388265570304652391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: key-w
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 336
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e626f66fee1439dd0800000000000000
+      internalID: -2480566475158494610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: key-a
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 320
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64f50a7fda9673f50800000000000000
+      internalID: 6861068753226981190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: key-s
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 320
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baa9b3e52dae523c0800000000000000
+      internalID: -4384840472930313557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: key-d
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 017e5b3dd70e62e50800000000000000
+      internalID: 6784356719707678480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: key-shift
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 256
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f47ab46c03f378100800000000000000
+      internalID: 110126194611693391
       vertices: []
       indices: 
       edges: []

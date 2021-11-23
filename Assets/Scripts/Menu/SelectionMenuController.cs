@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SelectionMenuController : MonoBehaviour
@@ -16,6 +17,7 @@ public class SelectionMenuController : MonoBehaviour
     [SerializeField] private GameObject unreadyButton;
     [SerializeField] private GameObject backButton;
     [SerializeField] private GameObject buttonPadding;
+    [SerializeField] private GameObject settingsButton;
     public SkinnedMeshRenderer Mesh;
     private MainMenuController mainMenu;
 
@@ -37,7 +39,7 @@ public class SelectionMenuController : MonoBehaviour
 
         var allSelectionMenus = FindObjectsOfType<SelectionMenuController>();
         if (allSelectionMenus.Length > 1)
-            this.SetBackButtonEnabled(false);
+            this.SetPlayerOneButtonsEnabled(false);
     }
 
     private void Start()
@@ -46,10 +48,11 @@ public class SelectionMenuController : MonoBehaviour
         this.SetVariables();
     }
 
-    private void SetBackButtonEnabled(bool enabled)
+    private void SetPlayerOneButtonsEnabled(bool enabled)
     {
         this.backButton.SetActive(enabled);
         this.buttonPadding.SetActive(enabled);
+        this.settingsButton.SetActive(enabled);
 
         this.accentPreviousButton.navigation = this.alternateAccentPreviousNavigation;
     }
@@ -57,6 +60,11 @@ public class SelectionMenuController : MonoBehaviour
     private void OnEnable()
     {
         this.SetVariables();
+    }
+
+    public void ToExtrasMenu()
+    {
+        SceneManager.LoadScene((int)Scenes.Extras);
     }
 
     public void NextMaterial()
