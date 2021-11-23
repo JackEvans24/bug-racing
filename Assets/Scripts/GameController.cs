@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour
     private PlayerSelection[] players;
     public static PlayerSelection[] Players { get => _instance.players; }
 
+    private MusicLoop music;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -25,6 +27,8 @@ public class GameController : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
+
+        this.music = GetComponentInChildren<MusicLoop>();
     }
 
     public static void SetPlayersAndPlay(IEnumerable<PlayerSelection> players, Scenes level)
@@ -32,4 +36,8 @@ public class GameController : MonoBehaviour
         _instance.players = players.ToArray();
         SceneManager.LoadScene((int)level);
     }
+
+    public static void UpdateMusic(MusicTrack track, bool play = true) => _instance.music.UpdateTrack(track, play);
+
+    public static void PlayMusic() => _instance.music.Play();
 }

@@ -4,8 +4,7 @@ using UnityEngine;
 public class MusicLoop : MonoBehaviour
 {
     private AudioSource[] sources;
-    [SerializeField] private MusicTrack track;
-    [SerializeField] private bool playOnStart;
+    private MusicTrack track;
 
     private bool loopStarted;
     private int sourceIndex;
@@ -14,14 +13,26 @@ public class MusicLoop : MonoBehaviour
     private void Awake()
     {
         this.sources = GetComponents<AudioSource>();
-
-        foreach (var source in this.sources)
-            source.clip = this.track.Clip;
     }
 
-    private void Start()
+    public void UpdateTrack(MusicTrack track, bool play = true)
     {
-        if (playOnStart)
+        if (this.track == track)
+            return;
+
+        this.loopStarted = false;
+        this.sourceIndex = 0;
+        this.nextPlayTime = 0;
+
+        this.track = track;
+
+        foreach (var source in this.sources)
+        {
+            source.Stop();
+            source.clip = this.track.Clip;
+        }
+
+        if (play)
             this.Play();
     }
 

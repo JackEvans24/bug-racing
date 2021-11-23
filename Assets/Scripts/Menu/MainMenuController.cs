@@ -12,6 +12,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private PlayerInputManager inputManager;
     [SerializeField] private CanvasGroup controlsView;
     [SerializeField] private CanvasGroup player2Hint;
+    [SerializeField] private MusicTrack menuMusic;
 
     [Header("Multiplayer")]
     [SerializeField] private float rejoinTimeout = 0.5f;
@@ -25,6 +26,8 @@ public class MainMenuController : MonoBehaviour
         this.menuIsActive = true;
         this.currentInputs = new List<PlayerInput>();
         this.selectedPlayers = new List<PlayerSelection>();
+
+        GameController.UpdateMusic(menuMusic);
     }
 
     public void PlayerJoined(PlayerInput input)

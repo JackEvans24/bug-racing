@@ -23,7 +23,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private GameObject PlayerContainer;
     [SerializeField] private GameObject AI;
     [SerializeField] private Transform startLine;
-    [SerializeField] private MusicLoop music;
+    [SerializeField] private MusicTrack music;
 
     [Header("Race Variables")]
     [SerializeField] private Color backgroundColor;
@@ -56,6 +56,7 @@ public class RaceManager : MonoBehaviour
 
     private void Start()
     {
+        GameController.UpdateMusic(music, false);
         StartCoroutine(this.RaceSetup(GameController.Players, this.totalRacers));
     }
 
@@ -177,7 +178,7 @@ public class RaceManager : MonoBehaviour
         foreach (var racer in this.racers)
             racer.CanMove = true;
 
-        this.music.Play();
+        GameController.PlayMusic();
 
         for (int i = 0; i < this.raceTextControllers.Count; i++)
         {
