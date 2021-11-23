@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public CameraFollow CameraFollow;
+    [SerializeField] private PauseMenuController pauseMenu;
 
     private AIController ai;
     [SerializeField] private GameObject[] aiObjects;
@@ -35,6 +36,9 @@ public class PlayerController : MonoBehaviour
         var item = actions.FindAction(InputButtons.USE_ITEM);
         item.started += (_obj) => this.itemSystem.UseCurrentItem();
 
+        var pause = actions.FindAction(InputButtons.PAUSE);
+        pause.started += (_obj) => this.TogglePause();
+
         var cameraReverse = actions.FindAction(InputButtons.REVERSE_VIEW);
         cameraReverse.started += (_obj) => this.SetCameraReverse(true);
         cameraReverse.canceled += (_obj) => this.SetCameraReverse(false);
@@ -59,5 +63,20 @@ public class PlayerController : MonoBehaviour
             obj.SetActive(true);
 
         this.enabled = false;
+    }
+
+    public void TogglePause()
+    {
+        if (Time.timeScale != 1 && !this.pauseMenu.Paused)
+            return;
+
+        if (this.pauseMenu.Paused)
+        {
+            this.pauseMenu.Resume();
+        }
+        else
+        {
+            this.pauseMenu.Pause();
+        }
     }
 }
