@@ -15,10 +15,12 @@ public class ShotItem : Item
     private Rigidbody rb;
     private bool isGrounded;
 
-    private void Awake()
+    private new void Awake()
     {
         this.rb = GetComponent<Rigidbody>();
         Destroy(this.gameObject, this.lifetime);
+
+        base.Awake();
     }
 
     private void Update()

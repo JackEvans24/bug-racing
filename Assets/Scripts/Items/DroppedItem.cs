@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -12,11 +13,13 @@ public class DroppedItem : Item
 
     private Rigidbody rb;
 
-    private void Awake()
+    protected new void Awake()
     {
         this.rb = GetComponent<Rigidbody>();
 
         this.rb.AddForce(initialVelocity * 100, ForceMode.VelocityChange);
+
+        base.Awake();
     }
 
     private void FixedUpdate()
