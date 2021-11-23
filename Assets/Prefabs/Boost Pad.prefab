@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4608405426118960770}
   - component: {fileID: 602219856556894503}
   - component: {fileID: 3440596790226869741}
+  - component: {fileID: 73457179732924245}
   - component: {fileID: 9095211451774071598}
   - component: {fileID: 8620407325058783997}
   m_Layer: 14
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7259b809b81c5a54885683f406fe275a, type: 2}
+  - {fileID: 2100000, guid: 70522527a8bd9604882640e1b716610f, type: 2}
   - {fileID: 2100000, guid: 3fa3b5f687f88e94a8a81ad06e92f63a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -84,6 +85,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &73457179732924245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3800907230975228984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4074b425e42464d488feb04f57999a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostColor: {r: 0, g: 1, b: 0, a: 1}
+  fadeTime: 1
+  easing: 4
 --- !u!64 &9095211451774071598
 MeshCollider:
   m_ObjectHideFlags: 0
