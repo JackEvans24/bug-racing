@@ -216,6 +216,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Up/Down Keys",
+                    "id": "9f4d30b5-c332-4bea-b734-e79e52ab9005",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vertical",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "8fbf2f99-4b90-4024-9a6c-f8a27ab5e36d",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Vertical",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "254bb3a7-d06e-4549-a60e-2e353f3269c8",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Vertical",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "A/D Keys",
                     "id": "955c67a0-2bd5-48ca-b6f7-574a69edb0da",
                     "path": "1DAxis",
@@ -277,6 +310,39 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left/Right Keys",
+                    "id": "af10732e-5e69-46c0-84ee-b46972d0c7c7",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "cebf51b2-5384-4675-95c1-df9069ec95d4",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "c76e10e5-fc1f-43bc-b25f-31ead22f07c2",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
                     "action": "Horizontal",
                     "isComposite": false,
                     "isPartOfComposite": true
