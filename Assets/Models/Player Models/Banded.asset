@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Banded
   m_EditorClassIdentifier: 
   HasAccent: 1
-  Body: {fileID: -1387407503233429609, guid: 5ebdb40f8edf8ef43a26fd9fccde41ef, type: 3}
+  Body: {fileID: -1387407503233429609, guid: c5bcf0b326a437d488ab4a3e239cc6a7, type: 3}
