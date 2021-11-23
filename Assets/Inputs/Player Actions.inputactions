@@ -348,6 +348,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "D Pad L/R",
+                    "id": "30b1a4a5-ed33-4263-80cb-4fc751c52ad5",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horizontal",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "c30e8392-28c6-4fd7-aece-665b7ac569d9",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "0d79d9af-df74-4157-81b6-9303a2b7a79b",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Horizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "feb4ccaa-b6ec-4f18-af07-cda68c837e7f",
                     "path": "<Gamepad>/start",
