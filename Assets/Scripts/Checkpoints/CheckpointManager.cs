@@ -6,10 +6,12 @@ public class CheckpointManager : MonoBehaviour
 {
     [SerializeField] private Checkpoint startCheckpoint;
     [SerializeField] private bool isCyclical = true;
+    [SerializeField] private bool overrideLaps;
+    [SerializeField] private int laps;
 
     private static CheckpointManager _instance;
 
-    public static int TotalLaps { get => GameController.Laps; }
+    public static int TotalLaps { get => _instance.overrideLaps ? _instance.laps : GameController.Laps; }
 
     private void Awake()
     {
