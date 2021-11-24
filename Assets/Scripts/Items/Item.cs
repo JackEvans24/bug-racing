@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class Item : MonoBehaviour
 {
     [Header("Initial scaling")]
-    [SerializeField] private float finalScale = 3f;
-    [SerializeField] private float scaleTime = 0.2f;
+    [SerializeField] protected float finalScale = 3f;
+    [SerializeField] protected float scaleTime = 0.2f;
 
     [Header("SFX")]
     [SerializeField] private AudioClip awakeClip;
