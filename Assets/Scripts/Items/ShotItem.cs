@@ -18,7 +18,7 @@ public class ShotItem : Item
     private new void Awake()
     {
         this.rb = GetComponent<Rigidbody>();
-        Destroy(this.gameObject, this.lifetime);
+        StartCoroutine(this.DestroyAfterLifetime());
 
         base.Awake();
     }
@@ -47,6 +47,12 @@ public class ShotItem : Item
 
         base.OnTriggerEnter(other);
     }
+
+    private IEnumerator DestroyAfterLifetime()
+    {
+        yield return new WaitForSeconds(this.lifetime);
+        this.DestroyWithSound();
+    } 
 
     private void Bounce()
     {

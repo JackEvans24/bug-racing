@@ -1,25 +1,44 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
+    [Header("Initial scaling")]
     [SerializeField] private float finalScale = 3f;
     [SerializeField] private float scaleTime = 0.2f;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip awakeClip;
+    [SerializeField] private AudioClip destroyClip;
+
+    private Guid startNoiseId = Guid.Empty;
+
     protected void Awake()
     {
+        if (this.awakeClip != null)
+            this.startNoiseId = GameController.PlaySound(this.awakeClip);
+
         this.transform.DOScale(this.finalScale, this.scaleTime);
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Tags.PLAYER))
-            Destroy(this.gameObject);
-        else if (other.CompareTag(Tags.OUT_OF_BOUNDS))
-            Destroy(this.gameObject);
+            this.DestroyWithSound();
         else if (other.CompareTag(Tags.HAZARD))
-            Destroy(this.gameObject);
+            this.DestroyWithSound();
+        else if (other.CompareTag(Tags.OUT_OF_BOUNDS))
+            this.DestroyWithSound();
+    }
+
+    protected void DestroyWithSound()
+    {
+        if (this.startNoiseId != Guid.Empty)
+            GameController.StopSound(this.startNoiseId);
+        if (this.destroyClip != null)
+            GameController.PlaySound(this.destroyClip);
+
+        Destroy(this.gameObject);
     }
 }
