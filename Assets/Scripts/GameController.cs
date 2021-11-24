@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private int totalRacers = 8;
     public static int TotalRacers { get => _instance.totalRacers; }
 
+    [SerializeField] private int laps = 2;
+    public static int Laps { get => _instance.laps; }
+
     [SerializeField] private int positionWaitFrames = 1;
     public static int PositionWaitFrames { get => _instance.positionWaitFrames; }
 

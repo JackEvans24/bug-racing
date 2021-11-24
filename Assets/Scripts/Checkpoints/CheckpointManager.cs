@@ -5,12 +5,11 @@ using UnityEngine;
 public class CheckpointManager : MonoBehaviour
 {
     [SerializeField] private Checkpoint startCheckpoint;
-    [SerializeField] private int laps;
     [SerializeField] private bool isCyclical = true;
 
     private static CheckpointManager _instance;
 
-    public static int TotalLaps { get => _instance.laps; }
+    public static int TotalLaps { get => GameController.Laps; }
 
     private void Awake()
     {
