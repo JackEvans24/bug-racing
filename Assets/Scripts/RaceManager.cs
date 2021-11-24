@@ -176,7 +176,7 @@ public class RaceManager : MonoBehaviour
         }
 
         foreach (var racer in this.racers)
-            racer.CanMove = true;
+            racer.RaceStart();
 
         foreach (var controller in this.raceTextControllers)
             StartCoroutine(controller.ShowRaceStart());

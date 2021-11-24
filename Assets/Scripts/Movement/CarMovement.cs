@@ -45,6 +45,7 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float checkpointResetTime = 0.2f;
 
     private Rigidbody rb;
+    private HoldingBugController[] holdingBugs;
     private float forwardMovement, turnAmount, velocity;
     private float stunTime, currentStunTime, currentBoostTime;
     private bool isGrounded;
@@ -60,16 +61,33 @@ public class CarMovement : MonoBehaviour
         this.rb = GetComponentInChildren<Rigidbody>();
         this.rb.transform.parent = null;
 
+        this.holdingBugs = GetComponentsInChildren<HoldingBugController>();
+
         this.currentStunTime = this.stunTime + 1f;
         this.currentBoostTime = this.boostTime + 1f;
     }
 
     public void MoveTo(Vector3 position)
     {
+        if (this.holdingBugs.Any())
+        {
+            foreach (var bug in this.holdingBugs)
+            {
+                var holdingBugOffset = bug.transform.position - this.transform.position;
+                bug.transform.position = position + holdingBugOffset;
+            }
+        }
+
         if (this.rb != null)
             this.rb.position = position;
         else
             this.transform.position = position;
+
+        if (this.holdingBugs.Any())
+        {
+            foreach (var bug in this.holdingBugs)
+                bug.ResetWiggle();
+        }
     }
 
     private void Start()
@@ -77,11 +95,22 @@ public class CarMovement : MonoBehaviour
         (this.CurrentCheckpoint, this.NextCheckpoint) = CheckpointManager.GetDefaultCheckpoints();
     }
 
+    public void RaceStart()
+    {
+        this.CanMove = true;
+
+        if (this.holdingBugs.Any())
+        {
+            foreach (var bug in this.holdingBugs)
+                bug.LetGo();
+        }
+    }
+
     private void Update()
     {
         this.UpdateTimeVariables();
 
-        if (!this.CanMove || this.currentStunTime <= this.stunTime)
+        if (!this.CanMove)
             return;
 
         // Update isGrounded
@@ -107,7 +136,7 @@ public class CarMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!this.CanMove || this.currentStunTime <= this.stunTime)
+        if (!this.CanMove)
             return;
 
         if (this.isGrounded)
@@ -132,6 +161,10 @@ public class CarMovement : MonoBehaviour
 
     private float GetVelocity()
     {
+        // Check stunned
+        if (this.currentStunTime <= this.stunTime)
+            return 0f;
+
         // Check boost
         if (this.boostChecks.Any(c => c.Hit.transform != null))
             this.currentBoostTime = 0;
