@@ -49,6 +49,21 @@ public class SoundController : MonoBehaviour
         return id;
     }
 
+    public IEnumerator PlayClipAsCoroutine(AudioClip clip)
+    {
+        var availableSource = this.sources.FirstOrDefault(s => !s.isPlaying);
+        if (availableSource == null)
+            yield break;
+
+        var id = Guid.NewGuid();
+        this.playingSources.Add(id, availableSource);
+
+        availableSource.clip = clip;
+        availableSource.Play();
+
+        yield return StopAfter(id, clip.length);
+    }
+
     public void PlayStep()
     {
         var availableSource = this.stepSources.FirstOrDefault(s => !s.isPlaying);

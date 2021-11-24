@@ -31,8 +31,8 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private Color lightingColor;
 
     [Header("Race Start")]
+    [SerializeField] private AudioClip startShot;
     [SerializeField] private Vector3 startPositioning;
-    [SerializeField] private int totalRacers = 8;
 
     [Header("Race position")]
     [SerializeField] private int positionUpdateFrequency = 5;
@@ -57,7 +57,7 @@ public class RaceManager : MonoBehaviour
     private void Start()
     {
         GameController.UpdateMusic(music, false);
-        StartCoroutine(this.RaceSetup(GameController.Players, this.totalRacers));
+        StartCoroutine(this.RaceSetup(GameController.Players, GameController.TotalRacers));
     }
 
     private void Update()
@@ -178,16 +178,12 @@ public class RaceManager : MonoBehaviour
         foreach (var racer in this.racers)
             racer.CanMove = true;
 
-        GameController.PlayMusic();
+        foreach (var controller in this.raceTextControllers)
+            StartCoroutine(controller.ShowRaceStart());
 
-        for (int i = 0; i < this.raceTextControllers.Count; i++)
-        {
-            var controller = this.raceTextControllers[i];
-            if (i + 1 >= this.raceTextControllers.Count)
-                yield return controller.ShowRaceStart();
-            else
-                StartCoroutine(controller.ShowRaceStart());
-        }
+        yield return GameController.PlaySoundAsCoroutine(this.startShot);
+
+        GameController.PlayMusic();
     }
 
     private IEnumerator EndRace()

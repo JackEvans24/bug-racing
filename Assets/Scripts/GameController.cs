@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     private static GameController _instance;
+
+    [SerializeField] private int totalRacers = 8;
+    public static int TotalRacers { get => _instance.totalRacers; }
 
     [SerializeField] private int positionWaitFrames = 1;
     public static int PositionWaitFrames { get => _instance.positionWaitFrames; }
@@ -45,6 +49,7 @@ public class GameController : MonoBehaviour
     public static void PlayMusic() => _instance.music.Play();
 
     public static Guid PlaySound(AudioClip clip) => _instance.sound.PlayClip(clip);
+    public static IEnumerator PlaySoundAsCoroutine(AudioClip clip) => _instance.sound.PlayClipAsCoroutine(clip);
     public static void StopSound(Guid id) => _instance.sound.StopSound(id);
     public static void PlayStep() => _instance.sound.PlayStep();
 }

@@ -52,8 +52,8 @@ MonoBehaviour:
   music: {fileID: 11400000, guid: 2f7de987b3114ea44b01c02bbf889ccc, type: 2}
   backgroundColor: {r: 0, g: 0, b: 0, a: 0}
   lightingColor: {r: 0, g: 0, b: 0, a: 0}
+  startShot: {fileID: 8300000, guid: 044c86fedbd3c3141a8a4c6dba8cd7b1, type: 3}
   startPositioning: {x: 10, y: 20, z: 10}
-  totalRacers: 8
   positionUpdateFrequency: 60
 --- !u!114 &2119028942972376330
 MonoBehaviour:
