@@ -100,6 +100,7 @@ MonoBehaviour:
   boostColor: {r: 0, g: 1, b: 0, a: 1}
   fadeTime: 1
   easing: 4
+  addDelay: 1
 --- !u!64 &9095211451774071598
 MeshCollider:
   m_ObjectHideFlags: 0
