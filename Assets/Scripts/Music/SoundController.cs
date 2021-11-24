@@ -7,7 +7,14 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundController : MonoBehaviour
 {
+    [Header("General SFX")]
     [SerializeField, Range(0, 1)] private float volume = 0.2f;
+
+    [Header("Footstep sounds")]
+    [SerializeField, Range(0, 1)] private float stepVolume = 0.2f;
+    [SerializeField] private GameObject stepSourceObject;
+    [SerializeField] private AudioClip[] stepSounds;
+    private AudioSource[] stepSources;
 
     private AudioSource[] sources;
     private Dictionary<Guid, AudioSource> playingSources;
@@ -19,6 +26,10 @@ public class SoundController : MonoBehaviour
 
         foreach (var source in this.sources)
             source.volume = this.volume;
+
+        this.stepSources = this.stepSourceObject.GetComponents<AudioSource>();
+        foreach (var source in this.stepSources)
+            source.volume = this.stepVolume;
     }
 
     public Guid PlayClip(AudioClip clip)
@@ -36,6 +47,17 @@ public class SoundController : MonoBehaviour
         StartCoroutine(this.StopAfter(id, clip.length));
 
         return id;
+    }
+
+    public void PlayStep()
+    {
+        var availableSource = this.stepSources.FirstOrDefault(s => !s.isPlaying);
+        if (availableSource == null)
+            return;
+
+        var clip = this.stepSounds[UnityEngine.Random.Range(0, this.stepSounds.Length)];
+        availableSource.clip = clip;
+        availableSource.Play();
     }
 
     private IEnumerator StopAfter(Guid id, float seconds)

@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: 0.2
-  stepVolume: 0.1
+  stepVolume: 0.05
   stepSourceObject: {fileID: 8141447204368012442}
   stepSounds:
   - {fileID: 8300000, guid: 6c22cec5601f9264291e4d5721d0d6ee, type: 3}

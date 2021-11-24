@@ -46,6 +46,8 @@ public class IKFootSolver : MonoBehaviour
                 int direction = this.body.InverseTransformPoint(info.point).z > this.body.InverseTransformPoint(this.newPosition).z ? 1 : -1;
                 this.newPosition = info.point + (this.body.forward * this.stepLength * direction) + (this.footOffset.x * this.body.right) + (this.footOffset.z * this.body.forward);
                 this.newNormal = info.normal;
+
+                GameController.PlayStep();
             }
         }
 

@@ -46,4 +46,5 @@ public class GameController : MonoBehaviour
 
     public static Guid PlaySound(AudioClip clip) => _instance.sound.PlayClip(clip);
     public static void StopSound(Guid id) => _instance.sound.StopSound(id);
+    public static void PlayStep() => _instance.sound.PlayStep();
 }
