@@ -21058,6 +21058,10 @@ PrefabInstance:
       value: RaceController
       objectReference: {fileID: 0}
     - target: {fileID: 5412294130925925059, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
+      propertyPath: totalRacers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5412294130925925059, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
       propertyPath: lightingColor.a
       value: 1
       objectReference: {fileID: 0}

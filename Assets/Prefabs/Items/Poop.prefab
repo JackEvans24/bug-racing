@@ -279,6 +279,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finalScale: 3
   scaleTime: 0.2
+  awakeClip: {fileID: 8300000, guid: 3c6cf8268fe05834aaea8c4497cd67c5, type: 3}
+  destroyClip: {fileID: 8300000, guid: 0c1a512caa80e3a418869b954790dfa3, type: 3}
   initialVelocity: {x: 0, y: 0.1, z: 0}
   gravity: 0.6
   groundChecks:
