@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDUpdater : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class HUDUpdater : MonoBehaviour
     public CarItemSystem itemSystem;
     [SerializeField] private TMP_Text lapText;
     [SerializeField] private TMP_Text positionText;
-    [SerializeField] private TMP_Text itemText;
+    [SerializeField] private Image itemImage;
     [SerializeField] private Canvas hudCanvas;
 
     private int totalLaps;
@@ -61,7 +62,8 @@ public class HUDUpdater : MonoBehaviour
     private void UpdateItem(ItemData item)
     {
         this.currentItem = item;
-        this.itemText.text = item == null ? string.Empty : item.itemName;
+        this.itemImage.color = item == null ? Color.clear : Color.white;
+        this.itemImage.sprite = item == null ? null : item.Sprite;
     }
 
     private void FinishRace()

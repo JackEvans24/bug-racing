@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46eb9e2b243cb734c812c5100e4dd4a9, type: 3}
   m_Name: Poop
   m_EditorClassIdentifier: 
-  itemName: Poop
-  itemType: 2
-  itemObj: {fileID: 6970165284555600482, guid: 821eccf4d4b67ce449ab79303c702fa3, type: 3}
+  Name: Dung
+  Type: 2
+  Prefab: {fileID: 6970165284555600482, guid: 821eccf4d4b67ce449ab79303c702fa3, type: 3}
+  Sprite: {fileID: 21300000, guid: 2339629a9ddcb0544985246fc3815cb7, type: 3}

@@ -40,7 +40,7 @@ public class CarItemSystem : MonoBehaviour
 
         // Only focus on drop for now
         var currentItem = this.CurrentItems.Pop();
-        switch (currentItem.itemType)
+        switch (currentItem.Type)
         {
             case ItemType.Self:
                 break;
@@ -68,11 +68,11 @@ public class CarItemSystem : MonoBehaviour
 
     private void DropItem(ItemData currentItem)
     {
-        Instantiate(currentItem.itemObj, this.dropPoint.position, this.dropPoint.rotation);
+        Instantiate(currentItem.Prefab, this.dropPoint.position, this.dropPoint.rotation);
     }
 
     private void ShootItem(ItemData currentItem)
     {
-        Instantiate(currentItem.itemObj, this.firePoint.position, this.firePoint.rotation);
+        Instantiate(currentItem.Prefab, this.firePoint.position, this.firePoint.rotation);
     }
 }

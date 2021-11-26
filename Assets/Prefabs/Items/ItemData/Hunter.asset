@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46eb9e2b243cb734c812c5100e4dd4a9, type: 3}
   m_Name: Hunter
   m_EditorClassIdentifier: 
-  itemName: Hunter
-  itemType: 3
-  itemObj: {fileID: 8009911428433050378, guid: 5370078119140e649bdddaf6430ed782, type: 3}
+  Name: Hunter
+  Type: 3
+  Prefab: {fileID: 8009911428433050378, guid: 5370078119140e649bdddaf6430ed782, type: 3}
+  Sprite: {fileID: 21300000, guid: 44950e346fefa0e41aedd79de780b3d9, type: 3}
