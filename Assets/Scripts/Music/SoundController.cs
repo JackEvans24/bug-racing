@@ -34,6 +34,9 @@ public class SoundController : MonoBehaviour
 
     public Guid PlayClip(AudioClip clip)
     {
+        if (clip == null)
+            return Guid.Empty;
+
         var availableSource = this.sources.FirstOrDefault(s => !s.isPlaying);
         if (availableSource == null)
             return Guid.Empty;
@@ -51,6 +54,9 @@ public class SoundController : MonoBehaviour
 
     public IEnumerator PlayClipAsCoroutine(AudioClip clip)
     {
+        if (clip == null)
+            yield break;
+
         var availableSource = this.sources.FirstOrDefault(s => !s.isPlaying);
         if (availableSource == null)
             yield break;

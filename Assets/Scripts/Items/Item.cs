@@ -16,9 +16,7 @@ public abstract class Item : MonoBehaviour
 
     protected void Awake()
     {
-        if (this.awakeClip != null)
-            this.startNoiseId = GameController.PlaySound(this.awakeClip);
-
+        this.startNoiseId = GameController.PlaySound(this.awakeClip);
         this.transform.DOScale(this.finalScale, this.scaleTime);
     }
 
@@ -36,8 +34,8 @@ public abstract class Item : MonoBehaviour
     {
         if (this.startNoiseId != Guid.Empty)
             GameController.StopSound(this.startNoiseId);
-        if (this.destroyClip != null)
-            GameController.PlaySound(this.destroyClip);
+        
+        GameController.PlaySound(this.destroyClip);
 
         Destroy(this.gameObject);
     }
