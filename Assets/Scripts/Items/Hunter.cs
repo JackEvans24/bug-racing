@@ -16,6 +16,7 @@ public class Hunter : Item
     [SerializeField] private Vector3 appearOffset;
     [SerializeField] private float appearDuration = 1.5f;
     [SerializeField] private Ease appearEasing = Ease.OutSine;
+    [SerializeField] private AudioClip appearNoise;
 
     [Header("Pause")]
     [SerializeField] private float pauseDuration = 1.5f;
@@ -23,6 +24,7 @@ public class Hunter : Item
     [Header("Attack")]
     [SerializeField] private float attackDuration = 0.1f;
     [SerializeField] private Ease attackEasing = Ease.InSine;
+    [SerializeField] private AudioClip attackNoise;
 
     private Transform target;
 
@@ -62,13 +64,23 @@ public class Hunter : Item
         this.transform.position = this.GetOffset(this.appearOffset, this.target);
         this.transform.DOScale(this.finalScale, this.appearDuration).SetEase(this.appearEasing);
 
+        GameController.PlaySound(this.appearNoise);
+
         yield return new WaitForSeconds(this.appearDuration + this.pauseDuration);
 
-        this.transform.DOLocalMove(Vector3.zero, this.attackDuration).SetEase(this.attackEasing);
+        this.transform.DOLocalMove(Vector3.zero, this.attackDuration).SetLoops(5, LoopType.Yoyo).SetEase(this.attackEasing);
 
-        yield return new WaitForSeconds(this.attackDuration);
+        for (int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(this.attackDuration);
 
-        car.Stun(this.stunTime);
+            GameController.PlaySound(this.attackNoise);
+
+            if (i == 0)
+                car.Stun(this.stunTime);
+
+            yield return new WaitForSeconds(this.attackDuration);
+        }
 
         this.DestroyWithSound();
     }

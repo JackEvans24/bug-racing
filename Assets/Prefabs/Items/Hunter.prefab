@@ -46,18 +46,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finalScale: 1
   scaleTime: 0.1
-  awakeClip: {fileID: 0}
+  awakeClip: {fileID: 8300000, guid: f80574c3d39cb584da942ce3993d1e11, type: 3}
   destroyClip: {fileID: 0}
-  stunTime: 2
+  stunTime: 3
   upDistance: {x: 0, y: 20, z: 20}
   upDuration: 1
   upEasing: 2
   appearOffset: {x: 0, y: 10, z: 10}
   appearDuration: 1.5
   appearEasing: 3
+  appearNoise: {fileID: 8300000, guid: f80574c3d39cb584da942ce3993d1e11, type: 3}
   pauseDuration: 0.5
   attackDuration: 0.1
   attackEasing: 2
+  attackNoise: {fileID: 8300000, guid: 4e5072cdb348ade4d81b0c7a34685a8c, type: 3}
 --- !u!95 &3438725297786502950
 Animator:
   serializedVersion: 3
