@@ -574,6 +574,8 @@ MonoBehaviour:
   scaleTime: 0.2
   awakeClip: {fileID: 8300000, guid: 97a37345cd8176d4c8695ade69f4efcf, type: 3}
   destroyClip: {fileID: 0}
+  effectTime: 2
+  particles: {fileID: 8727409873786991883, guid: a3ff641ad47310b42987b5dccf83078e, type: 3}
   groundChecks:
   - {fileID: 9070940018751607232}
   - {fileID: 8903764945564746926}
@@ -588,7 +590,6 @@ MonoBehaviour:
   velocity: 120
   lifetime: 5
   gravity: 0.6
-  stunTime: 2
 --- !u!95 &6553628499037142032
 Animator:
   serializedVersion: 3

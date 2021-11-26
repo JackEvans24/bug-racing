@@ -48,7 +48,8 @@ MonoBehaviour:
   scaleTime: 0.1
   awakeClip: {fileID: 8300000, guid: f80574c3d39cb584da942ce3993d1e11, type: 3}
   destroyClip: {fileID: 0}
-  stunTime: 3
+  effectTime: 3
+  particles: {fileID: 8727409873786991883, guid: 030677638bf06ad40a21dc09f36be328, type: 3}
   upDistance: {x: 0, y: 20, z: 20}
   upDuration: 1
   upEasing: 2

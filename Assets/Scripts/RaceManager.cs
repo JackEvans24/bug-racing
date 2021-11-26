@@ -137,8 +137,7 @@ public class RaceManager : MonoBehaviour
 
     private IEnumerator PositionRacers()
     {
-        for (int i = 0; i < GameController.PositionWaitFrames; i++)
-            yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
 
         for (int i = 0; i < this.racers.Count; i++)
         {

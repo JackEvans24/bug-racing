@@ -281,6 +281,8 @@ MonoBehaviour:
   scaleTime: 0.2
   awakeClip: {fileID: 8300000, guid: 3c6cf8268fe05834aaea8c4497cd67c5, type: 3}
   destroyClip: {fileID: 8300000, guid: 0c1a512caa80e3a418869b954790dfa3, type: 3}
+  effectTime: 2
+  particles: {fileID: 8727409873786991883, guid: e5eb69037dfdb474ebc110d4101c5141, type: 3}
   initialVelocity: {x: 0, y: 0.1, z: 0}
   gravity: 0.6
   groundChecks:
@@ -288,7 +290,6 @@ MonoBehaviour:
   - {fileID: 6627587480075092912}
   - {fileID: 7927074658291137282}
   - {fileID: 4020465190258967126}
-  stunTime: 2
 --- !u!1 &7928706168050527038
 GameObject:
   m_ObjectHideFlags: 0

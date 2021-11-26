@@ -12,6 +12,10 @@ public abstract class Item : MonoBehaviour
     [SerializeField] private AudioClip awakeClip;
     [SerializeField] private AudioClip destroyClip;
 
+    [Header("FX")]
+    [SerializeField] protected float effectTime;
+    [SerializeField] private GameObject particles;
+
     private Guid startNoiseId = Guid.Empty;
 
     protected void Awake()
@@ -38,5 +42,19 @@ public abstract class Item : MonoBehaviour
         GameController.PlaySound(this.destroyClip);
 
         Destroy(this.gameObject);
+    }
+
+    protected void StartParticles(Transform parent = null)
+    {
+        if (this.particles == null)
+            return;
+
+        var target = parent == null ? this.transform : parent;
+        var particles = Instantiate(this.particles, target.position, target.rotation);
+
+        if (parent != null)
+            particles.transform.parent = parent;
+
+        particles.transform.localPosition = Vector3.zero;
     }
 }

@@ -6,10 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class DroppedItem : Item
 {
+    [Header("Drop variables")]
     [SerializeField] private Vector3 initialVelocity;
     [SerializeField] private float gravity = 0.6f;
     [SerializeField] private Raycaster[] groundChecks;
-    [SerializeField] private float stunTime;
 
     private Rigidbody rb;
 
@@ -36,7 +36,10 @@ public class DroppedItem : Item
         {
             var car = other.GetComponent<CarMovement>();
             if (car != null)
-                car.Stun(this.stunTime);
+            {
+                car.Stun(this.effectTime);
+                this.StartParticles(car.transform);
+            }
         }
 
         base.OnTriggerEnter(other);

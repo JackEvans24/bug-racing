@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Hunter : Item
 {
-    [SerializeField] private float stunTime = 1f;
-
     [Header("Fly off")]
     [SerializeField] private Vector3 upDistance;
     [SerializeField] private float upDuration = 1f;
@@ -77,7 +75,10 @@ public class Hunter : Item
             GameController.PlaySound(this.attackNoise);
 
             if (i == 0)
-                car.Stun(this.stunTime);
+            {
+                this.StartParticles(car.transform);
+                car.Stun(this.effectTime);
+            }
 
             yield return new WaitForSeconds(this.attackDuration);
         }

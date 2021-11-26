@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ShotItem : Item
 {
+    [Header("Shoot variables")]
     [SerializeField] private Raycaster[] groundChecks;
     [SerializeField] private Raycaster[] forwardChecks;
     [SerializeField] private float velocity = 3f;
     [SerializeField] private float lifetime = 3f;
     [SerializeField] private float gravity = 0.6f;
-    [SerializeField] private float stunTime = 1f;
 
     private Rigidbody rb;
     private bool isGrounded;
@@ -42,7 +42,10 @@ public class ShotItem : Item
         {
             var car = other.GetComponent<CarMovement>();
             if (car != null)
-                car.Stun(this.stunTime);
+            {
+                this.StartParticles(car.transform);
+                car.Stun(this.effectTime);
+            }
         }
 
         base.OnTriggerEnter(other);
