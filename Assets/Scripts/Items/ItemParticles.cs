@@ -10,6 +10,6 @@ public class ItemParticles : MonoBehaviour
     private void Awake()
     {
         this.particles = GetComponent<ParticleSystem>();
-        Destroy(this.gameObject, this.particles.main.duration * 2);
+        Destroy(this.gameObject, this.particles.main.duration * 5);
     }
 }
