@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,13 @@ public class GameController : MonoBehaviour
 
     private PlayerSelection[] players;
     public static PlayerSelection[] Players { get => _instance.players; }
+
+    [Header("Transitions")]
+    [SerializeField] private RectTransform transition;
+    [SerializeField] private float transitionTime = 1f;
+    [SerializeField] private float waitTime = 2f;
+    [SerializeField] private Ease transitionEaseIn = Ease.InSine;
+    [SerializeField] private Ease transitionEaseOut = Ease.OutSine;
 
     private MusicLoop music;
     private SoundController sound;
@@ -38,10 +46,35 @@ public class GameController : MonoBehaviour
         this.sound = GetComponentInChildren<SoundController>();
     }
 
-    public static void SetPlayersAndPlay(IEnumerable<PlayerSelection> players, Scenes level)
+    public static void LoadScene(Scenes scene) => _instance.StartCoroutine(_instance.LoadSceneLocal(scene));
+
+    public static void SetPlayersAndPlay(IEnumerable<PlayerSelection> players, Scenes scene)
     {
         _instance.players = players.ToArray();
-        SceneManager.LoadScene((int)level);
+        LoadScene(scene);
+    }
+
+    private IEnumerator LoadSceneLocal(Scenes scene)
+    {
+        var offset = (Screen.width / 2) + transition.rect.width;
+        this.transition.localPosition = Vector3.right * offset;
+        this.transition.DOLocalMove(Vector3.zero, this.transitionTime).SetEase(this.transitionEaseIn);
+        yield return new WaitForSeconds(this.transitionTime);
+
+        var task = SceneManager.LoadSceneAsync((int)scene);
+        while (!task.isDone)
+            yield return null;
+
+        if (scene.IsRace())
+            yield return RaceManager.StartRaceSetup();
+
+        yield return new WaitForSeconds(this.waitTime);
+
+        this.transition.DOLocalMove(Vector3.left * offset, this.transitionTime).SetEase(this.transitionEaseOut);
+        yield return new WaitForSeconds(this.transitionTime);
+
+        if (scene.IsRace())
+            RaceManager.StartRace();
     }
 
     public static void UpdateMusic(MusicTrack track, bool play = true) => _instance.music.UpdateTrack(track, play);

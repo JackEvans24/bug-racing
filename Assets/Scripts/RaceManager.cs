@@ -57,7 +57,6 @@ public class RaceManager : MonoBehaviour
     private void Start()
     {
         GameController.UpdateMusic(music, false);
-        StartCoroutine(this.RaceSetup(GameController.Players, GameController.TotalRacers));
     }
 
     private void Update()
@@ -73,6 +72,10 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    public static IEnumerator StartRaceSetup() => _instance.RaceSetup(GameController.Players, GameController.TotalRacers);
+
+    public static void StartRace() => _instance.StartCoroutine(_instance.StartRaceLocal());
+
     private IEnumerator RaceSetup(PlayerSelection[] players, int totalRacerCount)
     {
         this.totalRacerCount = totalRacerCount;
@@ -85,7 +88,6 @@ public class RaceManager : MonoBehaviour
         yield return this.PositionRacers();
 
         this.setupComplete = true;
-        yield return this.StartRace();
     }
 
     private void GenerateAiRacers(int racerCount)
@@ -137,7 +139,8 @@ public class RaceManager : MonoBehaviour
 
     private IEnumerator PositionRacers()
     {
-        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < 5; i++)
+            yield return new WaitForEndOfFrame();
 
         for (int i = 0; i < this.racers.Count; i++)
         {
@@ -163,8 +166,10 @@ public class RaceManager : MonoBehaviour
         return this.startLine.position + xOffset + yOffset + zOffset;
     }
 
-    private IEnumerator StartRace()
+    private IEnumerator StartRaceLocal()
     {
+        //yield return this.PositionRacers();
+
         for (int i = 0; i < this.raceTextControllers.Count; i++)
         {
             var controller = this.raceTextControllers[i];
@@ -190,7 +195,8 @@ public class RaceManager : MonoBehaviour
         Debug.Log($"Race complete!");
 
         yield return new WaitForSeconds(5);
-        SceneManager.LoadScene((int)Scenes.Menu);
+
+        GameController.LoadScene(Scenes.Menu);
     }
 
     private void UpdatePositions()
