@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {x: -328, y: 5, z: 646}
   speed: 5
-  wait: 0
+  wait: 1
   easing: 4
 --- !u!1 &4273973375182733532
 GameObject:
@@ -175,6 +175,8 @@ MonoBehaviour:
   music: {fileID: 11400000, guid: 2f7de987b3114ea44b01c02bbf889ccc, type: 2}
   backgroundColor: {r: 0, g: 0, b: 0, a: 0}
   lightingColor: {r: 0, g: 0, b: 0, a: 0}
+  introCameras:
+  - {fileID: 2832932372522561239}
   startShot: {fileID: 8300000, guid: 044c86fedbd3c3141a8a4c6dba8cd7b1, type: 3}
   startPositioning: {x: 10, y: 20, z: 10}
   positionUpdateFrequency: 60

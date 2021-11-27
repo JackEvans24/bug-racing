@@ -15,6 +15,8 @@ public class RaceManager : MonoBehaviour
     private List<CarMovement> racers;
     private Dictionary<CarMovement, int> racePositions = new Dictionary<CarMovement, int>();
     private List<CarMovement> finishedRacers = new List<CarMovement>();
+    private int totalPlayerCount;
+    private int finishedPlayers;
 
     private List<RaceTextController> raceTextControllers;
 
@@ -31,6 +33,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private Color lightingColor;
 
     [Header("Race Start")]
+    [SerializeField] private CameraDolly[] introCameras;
     [SerializeField] private AudioClip startShot;
     [SerializeField] private Vector3 startPositioning;
 
@@ -79,6 +82,7 @@ public class RaceManager : MonoBehaviour
     private IEnumerator RaceSetup(PlayerSelection[] players, int totalRacerCount)
     {
         this.totalRacerCount = totalRacerCount;
+        this.totalPlayerCount = players.Length;
 
         RenderSettings.ambientLight = this.lightingColor;
 
@@ -86,6 +90,9 @@ public class RaceManager : MonoBehaviour
         this.GeneratePlayers(players);
 
         yield return this.PositionRacers();
+
+        if (this.introCameras.Length > 0)
+            this.introCameras[0].Prewarm();
 
         this.setupComplete = true;
     }
@@ -168,7 +175,8 @@ public class RaceManager : MonoBehaviour
 
     private IEnumerator StartRaceLocal()
     {
-        //yield return this.PositionRacers();
+        foreach (var cam in this.introCameras)
+            yield return cam.PlayDolly();
 
         for (int i = 0; i < this.raceTextControllers.Count; i++)
         {
@@ -222,8 +230,10 @@ public class RaceManager : MonoBehaviour
         Debug.Log($"{car.name} finished");
 
         finalPosition = this.finishedRacers.IndexOf(car) + 1;
+        if (!car.IsAi)
+            this.finishedPlayers++;
 
-        if (this.finishedRacers.Count == this.racers.Count)
+        if (this.finishedPlayers == this.totalPlayerCount)
             StartCoroutine(this.EndRace());
     }
 
