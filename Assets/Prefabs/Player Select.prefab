@@ -5576,6 +5576,7 @@ MonoBehaviour:
   menuCanvas: {fileID: 2969100228450618998}
   readyCanvas: {fileID: 581337371310668887}
   readyButton: {fileID: 2969100228911859555}
+  readyBackButton: {fileID: 3707045125975940740}
   unreadyButton: {fileID: 3707045125975940740}
   backButton: {fileID: 2969100229333976538}
   buttonPadding: {fileID: 2969100227855391053}

@@ -83,7 +83,13 @@ public class MainMenuController : MonoBehaviour
         this.selectedPlayers.Add(selection);
 
         if (this.selectedPlayers.Count == this.currentInputs.Count)
+        {
+            var selectionMenus = FindObjectsOfType<SelectionMenuController>();
+            foreach (var menu in selectionMenus)
+                menu.AllPlayersReady();
+
             this.StartRace();
+        }
     }
 
     public void Unready(InputDevice device)

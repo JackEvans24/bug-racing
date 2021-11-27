@@ -14,6 +14,7 @@ public class SelectionMenuController : MonoBehaviour
     [SerializeField] private GameObject menuCanvas;
     [SerializeField] private GameObject readyCanvas;
     [SerializeField] private GameObject readyButton;
+    [SerializeField] private GameObject readyBackButton;
     [SerializeField] private GameObject unreadyButton;
     [SerializeField] private GameObject backButton;
     [SerializeField] private GameObject buttonPadding;
@@ -152,6 +153,11 @@ public class SelectionMenuController : MonoBehaviour
 
         this.eventSystem.SetSelectedGameObject(null);
         this.eventSystem.SetSelectedGameObject(this.readyButton);
+    }
+
+    public void AllPlayersReady()
+    {
+        this.readyBackButton.SetActive(false);
     }
 
     private PlayerSelection GetPlayer() => new PlayerSelection()
