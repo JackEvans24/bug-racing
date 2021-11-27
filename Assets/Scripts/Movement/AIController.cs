@@ -50,7 +50,7 @@ public class AIController : MonoBehaviour
     private void Awake()
     {
         this.movement = GetComponent<CarMovement>();
-        this.movement.IsAi = true;
+        this.movement.IsAi = GetComponent<PlayerController>() == null;
 
         this.itemSystem = GetComponent<CarItemSystem>();
     }
