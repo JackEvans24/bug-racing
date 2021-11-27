@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6377633288126520550}
   - component: {fileID: 4249960668930921602}
-  - component: {fileID: 6514868156897565269}
   - component: {fileID: 2832932372522561239}
   m_Layer: 0
   m_Name: Camera
@@ -76,14 +75,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6514868156897565269
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 282007566761844755}
-  m_Enabled: 1
 --- !u!114 &2832932372522561239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,8 +175,6 @@ MonoBehaviour:
   music: {fileID: 11400000, guid: 2f7de987b3114ea44b01c02bbf889ccc, type: 2}
   backgroundColor: {r: 0, g: 0, b: 0, a: 0}
   lightingColor: {r: 0, g: 0, b: 0, a: 0}
-  cameras:
-  - {fileID: 2832932372522561239}
   startShot: {fileID: 8300000, guid: 044c86fedbd3c3141a8a4c6dba8cd7b1, type: 3}
   startPositioning: {x: 10, y: 20, z: 10}
   positionUpdateFrequency: 60
