@@ -31,7 +31,7 @@ public class CarMovement : MonoBehaviour
     [Header("Boost")]
     [SerializeField] private Raycaster[] boostChecks;
     [SerializeField] private float boostSpeed = 1f;
-    [SerializeField] private float boostTime = 1f;
+    [SerializeField] private float speedPadBoostTime = 1f;
 
     [Header("Drag")]
     [SerializeField] private float groundDrag = 4f;
@@ -47,7 +47,7 @@ public class CarMovement : MonoBehaviour
     private Rigidbody rb;
     private HoldingBugController[] holdingBugs;
     private float forwardMovement, turnAmount, velocity;
-    private float stunTime, currentStunTime, currentBoostTime;
+    private float stunTime, currentStunTime, currentBoostTime, boostTime;
     private bool isGrounded;
 
     public void SetMovement(float forward, float turnAmount)
@@ -63,6 +63,7 @@ public class CarMovement : MonoBehaviour
 
         this.holdingBugs = GetComponentsInChildren<HoldingBugController>();
 
+        this.boostTime = this.speedPadBoostTime;
         this.currentStunTime = this.stunTime + 1f;
         this.currentBoostTime = this.boostTime + 1f;
     }
@@ -88,6 +89,12 @@ public class CarMovement : MonoBehaviour
             foreach (var bug in this.holdingBugs)
                 bug.ResetWiggle();
         }
+    }
+
+    public void Boost(float seconds)
+    {
+        this.boostTime = Mathf.Max(seconds, this.boostTime - this.currentBoostTime);
+        this.currentBoostTime = 0;
     }
 
     private void Start()
@@ -167,7 +174,7 @@ public class CarMovement : MonoBehaviour
 
         // Check boost
         if (this.boostChecks.Any(c => c.Hit.transform != null))
-            this.currentBoostTime = 0;
+            this.Boost(this.speedPadBoostTime);
         if (this.currentBoostTime <= this.boostTime)
             return this.boostSpeed * 100;
 

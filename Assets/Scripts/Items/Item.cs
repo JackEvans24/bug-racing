@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
+    [NonSerialized] public CarMovement UsedBy;
+
     [Header("Initial scaling")]
     [SerializeField] protected float finalScale = 3f;
     [SerializeField] protected float scaleTime = 0.2f;

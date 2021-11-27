@@ -392,9 +392,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d56bc6f48568b0408dbdfecdf6be332, type: 2}
   - {fileID: 11400000, guid: 06ab0eb0c7b37a440bd8f0ae121e292d, type: 2}
   - {fileID: 11400000, guid: b52abf04f279eb349aa6b280215fb719, type: 2}
-  firstPlacePercentages: 1400000050000000
-  firstHalfPercentages: 3a0000002800000002000000
-  rearHalfPercentages: 46000000140000000a000000
+  - {fileID: 11400000, guid: f290177b3c9b9db4cb84907a1b9a9461, type: 2}
+  firstPlacePercentages: 0a0000005a000000
+  firstHalfPercentages: 35000000140000000200000019000000
+  rearHalfPercentages: 1e000000000000001400000032000000
 --- !u!1 &3686166995731766591
 GameObject:
   m_ObjectHideFlags: 0

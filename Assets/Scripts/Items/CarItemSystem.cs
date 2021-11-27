@@ -43,14 +43,15 @@ public class CarItemSystem : MonoBehaviour
         switch (currentItem.Type)
         {
             case ItemType.Self:
+                this.CreateItem(currentItem, this.transform);
                 break;
 
             case ItemType.Drop:
-                this.DropItem(currentItem);
+                this.CreateItem(currentItem, this.dropPoint);
                 break;
 
             case ItemType.Shoot:
-                this.ShootItem(currentItem);
+                this.CreateItem(currentItem, this.firePoint);
                 break;
 
             case ItemType.NextPlayer:
@@ -66,13 +67,12 @@ public class CarItemSystem : MonoBehaviour
         this.usingItem = false;
     }
 
-    private void DropItem(ItemData currentItem)
+    private void CreateItem(ItemData currentItem, Transform createPoint)
     {
-        Instantiate(currentItem.Prefab, this.dropPoint.position, this.dropPoint.rotation);
-    }
-
-    private void ShootItem(ItemData currentItem)
-    {
-        Instantiate(currentItem.Prefab, this.firePoint.position, this.firePoint.rotation);
+        var itemObj = Instantiate(currentItem.Prefab, createPoint.position, createPoint.rotation);
+        
+        var item = itemObj.GetComponent<Item>();
+        if (item != null)
+            item.UsedBy = this.movement;
     }
 }
