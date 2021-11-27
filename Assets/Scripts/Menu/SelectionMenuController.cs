@@ -62,10 +62,7 @@ public class SelectionMenuController : MonoBehaviour
         this.SetVariables();
     }
 
-    public void ToExtrasMenu()
-    {
-        SceneManager.LoadScene((int)Scenes.Extras);
-    }
+    public void ToExtrasMenu() => GameController.LoadScene(Scenes.Extras);
 
     public void NextMaterial()
     {

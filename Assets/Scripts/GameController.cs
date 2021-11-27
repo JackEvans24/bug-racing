@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     public static PlayerSelection[] Players { get => _instance.players; }
 
     [Header("Transitions")]
+    [SerializeField] private Canvas transitionCanvas;
     [SerializeField] private RectTransform transition;
     [SerializeField] private float transitionTime = 1f;
     [SerializeField] private float waitTime = 2f;
@@ -46,6 +47,8 @@ public class GameController : MonoBehaviour
         this.sound = GetComponentInChildren<SoundController>();
     }
 
+    // SCENES
+
     public static void LoadScene(Scenes scene) => _instance.StartCoroutine(_instance.LoadSceneLocal(scene));
 
     public static void SetPlayersAndPlay(IEnumerable<PlayerSelection> players, Scenes scene)
@@ -56,6 +59,8 @@ public class GameController : MonoBehaviour
 
     private IEnumerator LoadSceneLocal(Scenes scene)
     {
+        this.transitionCanvas.enabled = true;
+
         var offset = (Screen.width / 2) + transition.rect.width;
         this.transition.localPosition = Vector3.right * offset;
         this.transition.DOLocalMove(Vector3.zero, this.transitionTime).SetEase(this.transitionEaseIn);
@@ -75,11 +80,17 @@ public class GameController : MonoBehaviour
 
         if (scene.IsRace())
             RaceManager.StartRace();
+
+        this.transitionCanvas.enabled = false;
     }
+
+    // MUSIC
 
     public static void UpdateMusic(MusicTrack track, bool play = true) => _instance.music.UpdateTrack(track, play);
 
     public static void PlayMusic() => _instance.music.Play();
+
+    // SFX
 
     public static Guid PlaySound(AudioClip clip) => _instance.sound.PlayClip(clip);
     public static IEnumerator PlaySoundAsCoroutine(AudioClip clip) => _instance.sound.PlayClipAsCoroutine(clip);

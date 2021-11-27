@@ -370,9 +370,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalRacers: 8
   laps: 2
+  transitionCanvas: {fileID: 6557646197745149158}
   transition: {fileID: 4893762405104707493}
   transitionTime: 1.2
-  waitTime: 1
+  waitTime: 0.5
   transitionEaseIn: 2
   transitionEaseOut: 3
 --- !u!114 &5372916611264378652

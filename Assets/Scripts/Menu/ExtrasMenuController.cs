@@ -55,8 +55,5 @@ public class ExtrasMenuController : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(button);
     }
 
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene((int)Scenes.Menu);
-    }
+    public void BackToMainMenu() => GameController.LoadScene(Scenes.Menu);
 }
