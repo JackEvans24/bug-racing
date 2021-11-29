@@ -56,4 +56,6 @@ public class ExtrasMenuController : MonoBehaviour
     }
 
     public void BackToMainMenu() => GameController.LoadScene(Scenes.Menu);
+
+    public void Quit() => Application.Quit();
 }
