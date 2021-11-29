@@ -98,7 +98,8 @@ public class SoundController : MonoBehaviour
 
     public void StopAllSounds()
     {
-        foreach (var kvp in this.playingSources)
-            this.StopSound(kvp.Key);
+        var keys = this.playingSources.Select(source => source.Key).ToList();
+        foreach (var key in keys)
+            this.StopSound(key);
     }
 }
