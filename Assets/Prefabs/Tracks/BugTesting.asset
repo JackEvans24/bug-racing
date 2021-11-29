@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Testing Circuit
   Scene: 3
-  Image: {fileID: 0}
+  Image: {fileID: 21300000, guid: 79ca032974489704cb314205de89b2b4, type: 3}

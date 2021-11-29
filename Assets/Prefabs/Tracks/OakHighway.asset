@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Oak Highway
   Scene: 1
-  Image: {fileID: 0}
+  Image: {fileID: 21300000, guid: 9b6b82d993de9e34c86cf17f002e88ae, type: 3}
