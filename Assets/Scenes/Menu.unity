@@ -5150,10 +5150,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
-    - target: {fileID: 3323768666271267795, guid: 936813fb3d9b22a45939280edec45548, type: 3}
-      propertyPath: laps
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3451143838871203212, guid: 936813fb3d9b22a45939280edec45548, type: 3}
       propertyPath: m_RootOrder
       value: 0
