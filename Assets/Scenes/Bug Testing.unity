@@ -1421,7 +1421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2832932372522561239, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
       propertyPath: speed
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2832932372522561239, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
       propertyPath: target.x
@@ -2899,8 +2899,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {x: 0, y: 50, z: 140}
-  speed: 5
-  wait: 0
+  speed: 4
+  wait: 1
   easing: 4
 --- !u!20 &1250270493
 Camera:
