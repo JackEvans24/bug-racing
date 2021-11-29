@@ -7,6 +7,9 @@ public class HoldingBugController : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] LineRenderer line;
 
+    [Header("Positioning")]
+    public Vector3 InitialOffset;
+
     [Header("Wiggle")]
     [SerializeField] private Vector3 wiggleDistance;
     [SerializeField] private Vector2 wiggleSpeedBounds;

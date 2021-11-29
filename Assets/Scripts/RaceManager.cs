@@ -180,6 +180,8 @@ public class RaceManager : MonoBehaviour
 
     private IEnumerator StartRaceLocal()
     {
+        StartCoroutine(this.PositionRacers());
+
         foreach (var cam in this.introCameras)
             yield return cam.PlayDolly();
 

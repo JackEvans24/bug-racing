@@ -1658,7 +1658,7 @@ MonoBehaviour:
   - {fileID: 5173474591237461294}
   - {fileID: 6937600047542592368}
   boostSpeed: 4
-  boostTime: 1.6
+  speedPadBoostTime: 1.5
   groundDrag: 4
   airDrag: 0.1
   gravity: 1
@@ -4493,6 +4493,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1090839643107180996}
+    - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
+      propertyPath: InitialOffset.x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
+      propertyPath: InitialOffset.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
+      propertyPath: InitialOffset.z
+      value: -2.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: beb266064c3301340a53bb795cc52781, type: 3}
 --- !u!4 &3724937827033379767 stripped
@@ -4558,6 +4570,18 @@ PrefabInstance:
     - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
       propertyPath: wiggleSpeed.y
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
+      propertyPath: InitialOffset.x
+      value: -1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
+      propertyPath: InitialOffset.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
+      propertyPath: InitialOffset.z
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 8849774969125102823, guid: beb266064c3301340a53bb795cc52781, type: 3}
       propertyPath: wiggleDistance.x

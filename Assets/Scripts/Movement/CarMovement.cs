@@ -73,10 +73,7 @@ public class CarMovement : MonoBehaviour
         if (this.holdingBugs.Any())
         {
             foreach (var bug in this.holdingBugs)
-            {
-                var holdingBugOffset = bug.transform.position - this.transform.position;
-                bug.transform.position = position + holdingBugOffset;
-            }
+                bug.transform.position = position + bug.InitialOffset;
         }
 
         if (this.rb != null)
