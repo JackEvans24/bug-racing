@@ -14,6 +14,9 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private CanvasGroup player2Hint;
     [SerializeField] private MusicTrack menuMusic;
 
+    [Header("Track selection")]
+    [SerializeField] private TrackSelectMenuController trackSelection;
+
     [Header("Multiplayer")]
     [SerializeField] private float rejoinTimeout = 0.5f;
     private List<PlayerInput> currentInputs;
@@ -83,12 +86,16 @@ public class MainMenuController : MonoBehaviour
         this.selectedPlayers.Add(selection);
 
         if (this.selectedPlayers.Count == this.currentInputs.Count)
-        {
-            var selectionMenus = FindObjectsOfType<SelectionMenuController>();
-            foreach (var menu in selectionMenus)
-                menu.AllPlayersReady();
+            this.ShowTrackSelectionMenu();
+    }
 
-            this.StartRace();
+    public void UnreadyAll()
+    {
+        foreach (var selection in GameObject.FindGameObjectsWithTag(Tags.PLAYER_SELECTION))
+        {
+            var menu = selection.GetComponent<SelectionMenuController>();
+            if (menu != null)
+                menu.UnReady();
         }
     }
 
@@ -97,7 +104,7 @@ public class MainMenuController : MonoBehaviour
         this.selectedPlayers = this.selectedPlayers.Where(p => p.Device != device).ToList();
     }
 
-    public void Back()
+    public void BackToMainMenu()
     {
         foreach (var selection in GameObject.FindGameObjectsWithTag(Tags.PLAYER_SELECTION))
             Destroy(selection);
@@ -106,9 +113,18 @@ public class MainMenuController : MonoBehaviour
         this.selectedPlayers.Clear();
     }
 
-    public void StartRace()
+    private void ShowTrackSelectionMenu()
     {
-        GameController.SetPlayersAndPlay(this.selectedPlayers, Scenes.OakHighway);
+        var selectionMenus = FindObjectsOfType<SelectionMenuController>();
+        foreach (var menu in selectionMenus)
+            menu.AllPlayersReady();
+
+        this.trackSelection.Show();
+    }
+
+    public void StartRace(Scenes scene)
+    {
+        GameController.SetPlayersAndPlay(this.selectedPlayers, scene);
     }
 
     public void Quit()

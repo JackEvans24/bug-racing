@@ -46,7 +46,7 @@ public class RaceManager : MonoBehaviour
     [SerializeField] private AudioClip finishSound;
 
     private int totalRacerCount, currentFrameCount;
-    private bool setupComplete;
+    private bool setupComplete, raceComplete;
 
     private void Awake()
     {
@@ -208,7 +208,10 @@ public class RaceManager : MonoBehaviour
 
     private IEnumerator EndRace()
     {
-        Debug.Log($"Race complete!");
+        if (this.raceComplete)
+            yield break;
+
+        this.raceComplete = true;
 
         yield return new WaitForSeconds(5);
 
