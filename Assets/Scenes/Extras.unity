@@ -4150,9 +4150,7 @@ MonoBehaviour:
 
     Jack Higglesden
 
-    Stan Parker
-
-    Kelly Thompson'
+    Stan Parker'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ba5aebbfcb54d6a45a7f4e41e46da240, type: 2}
   m_sharedMaterial: {fileID: 2693987892818633475, guid: ba5aebbfcb54d6a45a7f4e41e46da240, type: 2}
@@ -5707,7 +5705,7 @@ GameObject:
   - component: {fileID: 1811817633}
   - component: {fileID: 1811817632}
   m_Layer: 5
-  m_Name: Bon
+  m_Name: Bon & Kelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5752,7 +5750,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Jack "Bon" Hunter
+  m_text: 'Jack "Bon" Hunter
+
+    Kelly Thompson'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ba5aebbfcb54d6a45a7f4e41e46da240, type: 2}
   m_sharedMaterial: {fileID: 2693987892818633475, guid: ba5aebbfcb54d6a45a7f4e41e46da240, type: 2}
