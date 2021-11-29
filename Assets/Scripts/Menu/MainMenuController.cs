@@ -29,7 +29,10 @@ public class MainMenuController : MonoBehaviour
         this.menuIsActive = true;
         this.currentInputs = new List<PlayerInput>();
         this.selectedPlayers = new List<PlayerSelection>();
+    }
 
+    private void Start()
+    {
         GameController.UpdateMusic(menuMusic);
     }
 
