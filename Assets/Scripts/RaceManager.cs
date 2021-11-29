@@ -34,6 +34,7 @@ public class RaceManager : MonoBehaviour
 
     [Header("Race Start")]
     [SerializeField] private CameraDolly[] introCameras;
+    [SerializeField] private AudioClip introTune;
     [SerializeField] private AudioClip startShot;
     [SerializeField] private Vector3 startPositioning;
     [SerializeField] private ParticleSystem[] startParticles;
@@ -182,9 +183,13 @@ public class RaceManager : MonoBehaviour
     {
         StartCoroutine(this.PositionRacers());
 
+        // Intro
+        GameController.PlaySound(this.introTune);
+
         foreach (var cam in this.introCameras)
             yield return cam.PlayDolly();
 
+        // Ready
         for (int i = 0; i < this.raceTextControllers.Count; i++)
         {
             var controller = this.raceTextControllers[i];
@@ -194,6 +199,7 @@ public class RaceManager : MonoBehaviour
                 StartCoroutine(controller.ShowRaceReady());
         }
 
+        // Start race
         foreach (var racer in this.racers)
             racer.RaceStart();
 
@@ -205,6 +211,7 @@ public class RaceManager : MonoBehaviour
 
         yield return GameController.PlaySoundAsCoroutine(this.startShot);
 
+        // Start music
         GameController.PlayMusic();
     }
 

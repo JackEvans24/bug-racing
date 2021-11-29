@@ -14763,6 +14763,7 @@ MonoBehaviour:
   lightingColor: {r: 0, g: 0, b: 0, a: 0}
   introCameras:
   - {fileID: 2832932372522561239}
+  introTune: {fileID: 8300000, guid: e1743d1445b4fda41b2a6da9bcd60923, type: 3}
   startShot: {fileID: 8300000, guid: 044c86fedbd3c3141a8a4c6dba8cd7b1, type: 3}
   startPositioning: {x: 10, y: 20, z: 10}
   startParticles:
