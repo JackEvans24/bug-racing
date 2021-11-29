@@ -95,4 +95,10 @@ public class SoundController : MonoBehaviour
         source.Stop();
         this.playingSources.Remove(sourceId);
     }
+
+    public void StopAllSounds()
+    {
+        foreach (var kvp in this.playingSources)
+            this.StopSound(kvp.Key);
+    }
 }

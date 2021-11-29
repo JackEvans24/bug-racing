@@ -59,6 +59,8 @@ public class GameController : MonoBehaviour
 
     private IEnumerator LoadSceneLocal(Scenes scene)
     {
+        this.sound.StopAllSounds();
+
         this.transitionCanvas.enabled = true;
 
         var offset = (Screen.width / 2) + transition.rect.width;
