@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         item.started += (_obj) => this.itemSystem.UseCurrentItem();
 
         var pause = actions.FindAction(InputButtons.PAUSE);
-        pause.started += (_obj) => this.TogglePause();
+        pause.started += Pause_started;
 
         var cameraReverse = actions.FindAction(InputButtons.REVERSE_VIEW);
         cameraReverse.started += (_obj) => this.SetCameraReverse(true);
@@ -65,6 +65,11 @@ public class PlayerController : MonoBehaviour
         this.enabled = false;
     }
 
+    private void Pause_started(InputAction.CallbackContext obj)
+    {
+        this.TogglePause();
+    }
+
     public void TogglePause()
     {
         if (Time.timeScale != 1 && !this.pauseMenu.Paused)
@@ -78,5 +83,11 @@ public class PlayerController : MonoBehaviour
         {
             this.pauseMenu.Pause();
         }
+    }
+
+    private void OnDestroy()
+    {
+        var pause = actions.FindAction(InputButtons.PAUSE);
+        pause.started -= Pause_started;
     }
 }
