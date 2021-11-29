@@ -23,6 +23,8 @@ public class PauseMenuController : MonoBehaviour
 
         this.canvas.interactable = true;
 
+        GameController.PauseAll();
+
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(resumeButton);
 
@@ -36,6 +38,8 @@ public class PauseMenuController : MonoBehaviour
         this.canvas.interactable = false;
 
         Time.timeScale = 1f;
+
+        GameController.ResumeAll();
 
         this.Paused = false;
     }

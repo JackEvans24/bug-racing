@@ -86,6 +86,18 @@ public class GameController : MonoBehaviour
         this.transitionCanvas.enabled = false;
     }
 
+    // PAUSE
+
+    public static void PauseAll()
+    {
+        _instance.sound.PauseAllSounds();
+    }
+
+    public static void ResumeAll()
+    {
+        _instance.sound.ResumeAllSounds();
+    }
+
     // MUSIC
 
     public static void UpdateMusic(MusicTrack track, bool play = true) => _instance.music.UpdateTrack(track, play);
