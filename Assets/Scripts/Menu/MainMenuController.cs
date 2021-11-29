@@ -115,11 +115,24 @@ public class MainMenuController : MonoBehaviour
 
     private void ShowTrackSelectionMenu()
     {
+        this.inputManager.DisableJoining();
+        this.player2Hint.alpha = 0;
+
         var selectionMenus = FindObjectsOfType<SelectionMenuController>();
         foreach (var menu in selectionMenus)
             menu.AllPlayersReady();
 
         this.trackSelection.Show();
+    }
+
+    public void BackToSelectionMenu()
+    {
+        this.UnreadyAll();
+
+        this.inputManager.EnableJoining();
+
+        if (this.currentInputs.Count < this.inputManager.maxPlayerCount)
+            this.player2Hint.alpha = 1;
     }
 
     public void StartRace(Scenes scene)

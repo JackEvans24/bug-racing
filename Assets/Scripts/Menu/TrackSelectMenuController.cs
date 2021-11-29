@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,6 +7,7 @@ public class TrackSelectMenuController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Canvas menuCanvas;
+    [SerializeField] private EventSystem eventSystem;
     [SerializeField] private MainMenuController menu;
     [SerializeField] private Track[] tracks;
 
@@ -29,8 +28,9 @@ public class TrackSelectMenuController : MonoBehaviour
     {
         this.menuCanvas.enabled = true;
 
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(this.nextButton);
+        this.eventSystem.gameObject.SetActive(true);
+        this.eventSystem.SetSelectedGameObject(null);
+        this.eventSystem.SetSelectedGameObject(this.nextButton);
     }
 
     public void NextTrack()
@@ -64,6 +64,8 @@ public class TrackSelectMenuController : MonoBehaviour
     public void Back()
     {
         this.menuCanvas.enabled = false;
-        this.menu.UnreadyAll();
+        this.eventSystem.gameObject.SetActive(false);
+
+        this.menu.BackToSelectionMenu();
     }
 }
