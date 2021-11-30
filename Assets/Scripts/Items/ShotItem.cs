@@ -6,11 +6,9 @@ using UnityEngine;
 public class ShotItem : Item
 {
     [Header("Shoot variables")]
-    [SerializeField] private Raycaster[] groundChecks;
     [SerializeField] private Raycaster[] forwardChecks;
     [SerializeField] private float velocity = 3f;
     [SerializeField] private float lifetime = 3f;
-    [SerializeField] private float gravity = 0.6f;
 
     private Rigidbody rb;
     private bool isGrounded;
@@ -30,9 +28,6 @@ public class ShotItem : Item
 
     private void FixedUpdate()
     {
-        if (this.groundChecks.All(g => g.Hit.transform == null))
-            this.rb.AddForce(this.transform.up * this.gravity * -100);
-
         this.rb.velocity = this.transform.forward * this.velocity;
     }
 
