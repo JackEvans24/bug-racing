@@ -6,12 +6,13 @@ public enum Scenes
     OakHighway,
     Extras,
     BugTesting,
-    OakHighwayNight
+    OakHighwayNight,
+    SandBurrows
 }
 
 public static class ScenesExtensions
 {
-    private static Scenes[] raceScenes = new[] { Scenes.OakHighway, Scenes.BugTesting, Scenes.OakHighwayNight };
+    private static Scenes[] raceScenes = new[] { Scenes.OakHighway, Scenes.BugTesting, Scenes.OakHighwayNight, Scenes.SandBurrows };
 
     public static bool IsRace(this Scenes scene) => raceScenes.Contains(scene);
 }

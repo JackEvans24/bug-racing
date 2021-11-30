@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Oak Highway - Night.unity
     guid: a60ff42b8b1519647aa3cc24321d6aba
+  - enabled: 1
+    path: Assets/Scenes/Sand Burrows.unity
+    guid: a962112b9e7a4fc49b4ccd0d5ee35e60
   m_configObjects: {}
