@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46eb9e2b243cb734c812c5100e4dd4a9, type: 3}
   m_Name: Bees
   m_EditorClassIdentifier: 
-  Name: Bees
+  Name: Bee Swarm
+  Description: Sends a swarm of angry bees shooting forward - check your back when
+    you hear buzzing!
   Type: 3
   Prefab: {fileID: 6970165284555600482, guid: b2caa4c494583bf4d9b71fada0cbbdb9, type: 3}
   Sprite: {fileID: 21300000, guid: 06272c6c964568f4697b1e7fe6759c79, type: 3}

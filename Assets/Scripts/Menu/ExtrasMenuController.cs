@@ -8,14 +8,25 @@ public class ExtrasMenuController : MonoBehaviour
 {
     [Header("Menus")]
     [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject items;
     [SerializeField] private GameObject controls;
     [SerializeField] private GameObject credits;
 
     [Header("Default buttons")]
+    [SerializeField] private GameObject itemsBack;
     [SerializeField] private GameObject controlsBack;
     [SerializeField] private GameObject creditsBack;
+    [SerializeField] private GameObject itemsButton;
     [SerializeField] private GameObject controlsButton;
     [SerializeField] private GameObject creditsButton;
+
+    public void ShowItems()
+    {
+        this.menu.SetActive(false);
+        this.items.SetActive(true);
+
+        this.SetButton(this.itemsBack);
+    }
 
     public void ShowControls()
     {
@@ -31,6 +42,14 @@ public class ExtrasMenuController : MonoBehaviour
         this.credits.SetActive(true);
 
         this.SetButton(this.creditsBack);
+    }
+
+    public void BackFromItems()
+    {
+        this.menu.SetActive(true);
+        this.items.SetActive(false);
+
+        this.SetButton(this.itemsButton);
     }
 
     public void BackFromControls()

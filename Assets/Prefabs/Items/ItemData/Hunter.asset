@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Hunter
   m_EditorClassIdentifier: 
   Name: Hunter
+  Description: Release the hunter to attack the racer currently leading the pack!
+    This cannot be avoided, so beware
   Type: 3
   Prefab: {fileID: 8009911428433050378, guid: 5370078119140e649bdddaf6430ed782, type: 3}
   Sprite: {fileID: 21300000, guid: 44950e346fefa0e41aedd79de780b3d9, type: 3}

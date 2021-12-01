@@ -4,6 +4,8 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public string Name;
+    [TextArea(1, 4)]
+    public string Description;
     public ItemType Type;
     public GameObject Prefab;
     public Sprite Sprite;
