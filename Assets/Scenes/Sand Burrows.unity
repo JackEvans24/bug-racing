@@ -8642,6 +8642,10 @@ PrefabInstance:
       value: RaceController
       objectReference: {fileID: 0}
     - target: {fileID: 5412294130925925059, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
+      propertyPath: music
+      value: 
+      objectReference: {fileID: 11400000, guid: 76e3c141ad7bd52458d4b0a7213184dd, type: 2}
+    - target: {fileID: 5412294130925925059, guid: 18ffc5a3f9de0fd4c83cb1ca13f0edf1, type: 3}
       propertyPath: totalRacers
       value: 8
       objectReference: {fileID: 0}
