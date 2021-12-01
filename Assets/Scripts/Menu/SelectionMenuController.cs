@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -8,6 +9,7 @@ public class SelectionMenuController : MonoBehaviour
 {
     [Header("References")]
     public PlayerInput Input;
+    public int PlayerNumber;
     [SerializeField] private EventSystem eventSystem;
 
     [Header("Canvas References")]
@@ -38,7 +40,8 @@ public class SelectionMenuController : MonoBehaviour
         this.mainMenu = FindObjectOfType<MainMenuController>();
 
         var allSelectionMenus = FindObjectsOfType<SelectionMenuController>();
-        if (allSelectionMenus.Length > 1)
+        this.PlayerNumber = allSelectionMenus.Any() ? allSelectionMenus.Max(menu => menu.PlayerNumber) + 1 : 1;
+        if (this.PlayerNumber > 1)
             this.SetPlayerOneButtonsEnabled(false);
     }
 
@@ -140,7 +143,7 @@ public class SelectionMenuController : MonoBehaviour
         this.eventSystem.SetSelectedGameObject(null);
         this.eventSystem.SetSelectedGameObject(this.unreadyButton);
 
-        this.mainMenu.Ready(GetPlayer());
+        this.mainMenu.Ready(this.PlayerNumber, GetPlayer());
     }
 
     public void UnReady()

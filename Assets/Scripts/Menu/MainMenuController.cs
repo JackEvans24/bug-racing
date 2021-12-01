@@ -22,13 +22,13 @@ public class MainMenuController : MonoBehaviour
     private List<PlayerInput> currentInputs;
     private bool menuIsActive;
 
-    private List<PlayerSelection> selectedPlayers;
+    private Dictionary<int, PlayerSelection> selectedPlayers;
 
     private void Awake()
     {
         this.menuIsActive = true;
         this.currentInputs = new List<PlayerInput>();
-        this.selectedPlayers = new List<PlayerSelection>();
+        this.selectedPlayers = new Dictionary<int, PlayerSelection>();
     }
 
     private void Start()
@@ -84,9 +84,9 @@ public class MainMenuController : MonoBehaviour
         this.inputManager.EnableJoining();
     }
 
-    public void Ready(PlayerSelection selection)
+    public void Ready(int playerNumber, PlayerSelection selection)
     {
-        this.selectedPlayers.Add(selection);
+        this.selectedPlayers.Add(playerNumber, selection);
 
         if (this.selectedPlayers.Count == this.currentInputs.Count)
             this.ShowTrackSelectionMenu();
@@ -104,7 +104,7 @@ public class MainMenuController : MonoBehaviour
 
     public void Unready(InputDevice device)
     {
-        this.selectedPlayers = this.selectedPlayers.Where(p => p.Device != device).ToList();
+        this.selectedPlayers = this.selectedPlayers.Where(kvp => kvp.Value.Device != device).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
 
     public void BackToMainMenu()
@@ -140,7 +140,12 @@ public class MainMenuController : MonoBehaviour
 
     public void StartRace(Scenes scene)
     {
-        GameController.SetPlayersAndPlay(this.selectedPlayers, scene);
+        var players = this.selectedPlayers
+            .OrderBy(kvp => kvp.Key)
+            .Select(kvp => kvp.Value)
+            .ToList();
+
+        GameController.SetPlayersAndPlay(players, scene);
     }
 
     public void Quit()
