@@ -11,7 +11,6 @@ public class ShotItem : Item
     [SerializeField] private float lifetime = 3f;
 
     private Rigidbody rb;
-    private bool isGrounded;
 
     private new void Awake()
     {
