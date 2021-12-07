@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 2749919266396724349}
   - component: {fileID: 2749919266396724345}
   - component: {fileID: 213311966274939396}
-  m_Layer: 0
+  - component: {fileID: 5455067367648077847}
+  m_Layer: 13
   m_Name: Item Box
   m_TagString: Item Box
   m_Icon: {fileID: 0}
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b975f974911af8343893f2eb2d7b6e5d, type: 2}
+  - {fileID: 2100000, guid: bd4a95869dfe08c418ed9e686fc64748, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +96,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2749919266396724345
 MonoBehaviour:
@@ -109,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d39acf8c333c3499704f62f135cb4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downTime: 5
+  downTime: 2
 --- !u!54 &213311966274939396
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,3 +127,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &5455067367648077847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2749919266396724348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4074b425e42464d488feb04f57999a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostColor: {r: 1, g: 0.9780377, b: 0, a: 0}
+  fadeTime: 1
+  easing: 4
+  addDelay: 1

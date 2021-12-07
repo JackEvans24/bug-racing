@@ -4,5 +4,23 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 0ef82a4b5d28e6a4ca52b02277cace07
+  - enabled: 1
+    path: Assets/Scenes/Oak Highway.unity
+    guid: 9e0c432efe8c5b841bbc20f63e72923d
+  - enabled: 1
+    path: Assets/Scenes/Extras.unity
+    guid: 5ed546e79df4035428fee236fdd64c81
+  - enabled: 1
+    path: Assets/Scenes/Bug Testing.unity
+    guid: 127a644f8b61376499c61cb1dbbf6df1
+  - enabled: 1
+    path: Assets/Scenes/Oak Highway - Night.unity
+    guid: a60ff42b8b1519647aa3cc24321d6aba
+  - enabled: 1
+    path: Assets/Scenes/Sand Burrows.unity
+    guid: a962112b9e7a4fc49b4ccd0d5ee35e60
   m_configObjects: {}

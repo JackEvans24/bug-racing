@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDUpdater : MonoBehaviour
 {
     [Header("References")]
     public CarMovement car;
+    public CarItemSystem itemSystem;
     [SerializeField] private TMP_Text lapText;
     [SerializeField] private TMP_Text positionText;
+    [SerializeField] private Image itemImage;
+    [SerializeField] private Canvas hudCanvas;
 
     private int totalLaps;
     private int currentLap;
     private int currentPosition;
+    private ItemData currentItem;
+    private bool raceFinished = false;
 
     private void Start()
     {
@@ -21,33 +27,49 @@ public class HUDUpdater : MonoBehaviour
 
     private void Update()
     {
+        if (raceFinished)
+            return;
+
         if (currentLap != car.LapsCompleted + 1)
         {
             this.currentLap = car.LapsCompleted + 1;
+
+            if (currentLap > CheckpointManager.TotalLaps)
+            {
+                this.FinishRace();
+                return;
+            }
+
             this.lapText.text = $"Lap {this.currentLap}/{this.totalLaps}";
         }
 
         if (RaceManager.TryGetPosition(this.car, out var position) && position != this.currentPosition)
         {
             this.currentPosition = position;
+            this.positionText.text = PositionHelpers.GetPositionText(this.currentPosition);
+        }
 
-            var positionOrdinal = this.GetPositionOrdinal(this.currentPosition);
-            this.positionText.text = $"{this.currentPosition}{positionOrdinal}";
+        if (this.itemSystem.CurrentItems.Count == 0 && this.currentItem != null)
+            this.UpdateItem(null);
+        else if (this.itemSystem.CurrentItems.Count > 0)
+        {
+            var nextItem = this.itemSystem.CurrentItems.Peek();
+            if (this.currentItem != nextItem)
+                this.UpdateItem(nextItem);
         }
     }
 
-    private string GetPositionOrdinal(int position)
+    private void UpdateItem(ItemData item)
     {
-        switch (position)
-        {
-            case 1:
-                return "st";
-            case 2:
-                return "nd";
-            case 3:
-                return "rd";
-            default:
-                return "th";
-        }
+        this.currentItem = item;
+        this.itemImage.color = item == null ? Color.clear : Color.white;
+        this.itemImage.sprite = item == null ? null : item.Sprite;
+    }
+
+    private void FinishRace()
+    {
+        this.raceFinished = true;
+        this.hudCanvas.enabled = false;
+        this.enabled = false;
     }
 }

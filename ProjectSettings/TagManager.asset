@@ -9,6 +9,7 @@ TagManager:
   - OutOfBounds
   - Hazard
   - Item Box
+  - Player Selection
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - PlayerBody
   - Obstacle
   - OutOfBounds
-  - 
-  - 
+  - Item
+  - SpeedBoost
   - 
   - 
   - 
@@ -48,4 +49,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 492638559
+    locked: 0
+  - name: Scene Transition
+    uniqueID: 428570191
     locked: 0

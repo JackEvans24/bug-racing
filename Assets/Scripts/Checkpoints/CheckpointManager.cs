@@ -5,11 +5,13 @@ using UnityEngine;
 public class CheckpointManager : MonoBehaviour
 {
     [SerializeField] private Checkpoint startCheckpoint;
+    [SerializeField] private bool isCyclical = true;
+    [SerializeField] private bool overrideLaps;
     [SerializeField] private int laps;
 
     private static CheckpointManager _instance;
 
-    public static int TotalLaps { get => _instance.laps; }
+    public static int TotalLaps { get => _instance.overrideLaps ? _instance.laps : GameController.Laps; }
 
     private void Awake()
     {
@@ -51,7 +53,9 @@ public class CheckpointManager : MonoBehaviour
     {
         var nextCheckpoint = forAI ? checkpoint.GetNextCheckpointForAI() : checkpoint.GetNextCheckpointForPlayer();
 
-        if (checkpoint.NextCheckpoints.Max(c => c.Index == 0))
+        if (this.isCyclical && checkpoint.Index == 0)
+            return NextCheckpointDto.Lap(nextCheckpoint);
+        else if (!this.isCyclical && checkpoint.NextCheckpoints.Max(c => c.Index == 0))
             return NextCheckpointDto.Lap(nextCheckpoint);
         else
             return NextCheckpointDto.Checkpoint(nextCheckpoint);

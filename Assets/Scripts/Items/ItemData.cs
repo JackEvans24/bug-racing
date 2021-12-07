@@ -3,13 +3,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Objects/Item")]
 public class ItemData : ScriptableObject
 {
-    public string itemName;
-    public ItemType itemType;
-    public GameObject itemObj;
+    public string Name;
+    [TextArea(1, 4)]
+    public string Description;
+    public ItemType Type;
+    public GameObject Prefab;
+    public Sprite Sprite;
 
     public CarMovement GetTarget(CarMovement activatedBy)
     {
-        switch (this.itemType)
+        switch (this.Type)
         {
             case ItemType.Self:
                 return activatedBy;

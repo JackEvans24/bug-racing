@@ -9,7 +9,7 @@ public class CarItemSystem : MonoBehaviour
     [SerializeField] private Transform dropPoint;
 
     [Header("DO NOT TOUCH")]
-    public ItemData currentItem;
+    public Stack<ItemData> CurrentItems = new Stack<ItemData>();
     
     private CarMovement movement;
     private bool usingItem;
@@ -21,31 +21,37 @@ public class CarItemSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (this.currentItem != null || this.usingItem)
+        if (this.CurrentItems.Count > 0 || this.usingItem)
             return;
 
         if (other.CompareTag(Tags.ITEM_BOX))
-            this.currentItem = ItemManager.GetItem(this.movement);
+        {
+            foreach (var item in ItemManager.GetItems(this.movement))
+                this.CurrentItems.Push(item);
+        }
     }
 
     public void UseCurrentItem()
     {
-        if (this.currentItem == null || this.usingItem)
+        if (this.CurrentItems.Count <= 0 || this.usingItem || this.movement.IsStunned)
             return;
 
         this.usingItem = true;
 
         // Only focus on drop for now
-        switch (this.currentItem.itemType)
+        var currentItem = this.CurrentItems.Pop();
+        switch (currentItem.Type)
         {
             case ItemType.Self:
+                this.CreateItem(currentItem, this.transform);
                 break;
 
             case ItemType.Drop:
-                DropItem();
+                this.CreateItem(currentItem, this.dropPoint);
                 break;
 
             case ItemType.Shoot:
+                this.CreateItem(currentItem, this.firePoint);
                 break;
 
             case ItemType.NextPlayer:
@@ -58,12 +64,15 @@ public class CarItemSystem : MonoBehaviour
                 throw new System.NotImplementedException();
         }
 
-        this.currentItem = null;
         this.usingItem = false;
     }
 
-    private void DropItem()
+    private void CreateItem(ItemData currentItem, Transform createPoint)
     {
-        var item = Instantiate(this.currentItem.itemObj, this.dropPoint.position, this.dropPoint.rotation);
+        var itemObj = Instantiate(currentItem.Prefab, createPoint.position, createPoint.rotation);
+        
+        var item = itemObj.GetComponent<Item>();
+        if (item != null)
+            item.UsedBy = this.movement;
     }
 }

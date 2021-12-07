@@ -11,12 +11,15 @@ public class CarMovement : MonoBehaviour
     public int LapsCompleted = 0;
     public bool IsAi = false;
     public bool CanMove = false;
+    public int CurrentPosition;
+    public bool IsStunned { get => this.currentStunTime <= this.stunTime; }
 
     [Header("References")]
     [SerializeField] private Collider bodyCollider;
     [SerializeField] private Raycaster mainGroundCheck;
     [SerializeField] private Raycaster[] groundChecks;
     [SerializeField] private Raycaster[] aerialGroundChecks;
+    [SerializeField] private RaceTextController TextController;
 
     [Header("Movement")]
     [SerializeField] private float forwardSpeed = 1f;
@@ -24,6 +27,11 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float turnSpeed = 2f;
     [SerializeField] private float aerialTurnSpeed = 0.2f;
     [SerializeField] private float rotationSmoothing = 1f;
+
+    [Header("Boost")]
+    [SerializeField] private Raycaster[] boostChecks;
+    [SerializeField] private float boostSpeed = 1f;
+    [SerializeField] private float speedPadBoostTime = 1f;
 
     [Header("Drag")]
     [SerializeField] private float groundDrag = 4f;
@@ -36,12 +44,10 @@ public class CarMovement : MonoBehaviour
     [Header("Checkpoint Reset")]
     [SerializeField] private float checkpointResetTime = 0.2f;
 
-    [Header("RacePosition")]
-    [SerializeField] private int currentPosition;
-
     private Rigidbody rb;
+    private HoldingBugController[] holdingBugs;
     private float forwardMovement, turnAmount, velocity;
-    private float stunTime, currentStunTime;
+    private float stunTime, currentStunTime, currentBoostTime, boostTime;
     private bool isGrounded;
 
     public void SetMovement(float forward, float turnAmount)
@@ -55,7 +61,37 @@ public class CarMovement : MonoBehaviour
         this.rb = GetComponentInChildren<Rigidbody>();
         this.rb.transform.parent = null;
 
+        this.holdingBugs = GetComponentsInChildren<HoldingBugController>();
+
+        this.boostTime = this.speedPadBoostTime;
         this.currentStunTime = this.stunTime + 1f;
+        this.currentBoostTime = this.boostTime + 1f;
+    }
+
+    public void MoveTo(Vector3 position)
+    {
+        if (this.holdingBugs.Any())
+        {
+            foreach (var bug in this.holdingBugs)
+                bug.transform.position = position + bug.InitialOffset;
+        }
+
+        if (this.rb != null)
+            this.rb.position = position;
+        else
+            this.transform.position = position;
+
+        if (this.holdingBugs.Any())
+        {
+            foreach (var bug in this.holdingBugs)
+                bug.ResetWiggle();
+        }
+    }
+
+    public void Boost(float seconds)
+    {
+        this.boostTime = Mathf.Max(seconds, this.boostTime - this.currentBoostTime);
+        this.currentBoostTime = 0;
     }
 
     private void Start()
@@ -63,11 +99,22 @@ public class CarMovement : MonoBehaviour
         (this.CurrentCheckpoint, this.NextCheckpoint) = CheckpointManager.GetDefaultCheckpoints();
     }
 
+    public void RaceStart()
+    {
+        this.CanMove = true;
+
+        if (this.holdingBugs.Any())
+        {
+            foreach (var bug in this.holdingBugs)
+                bug.LetGo();
+        }
+    }
+
     private void Update()
     {
-        this.UpdateStunTime();
+        this.UpdateTimeVariables();
 
-        if (!this.CanMove || this.currentStunTime <= this.stunTime)
+        if (!this.CanMove)
             return;
 
         // Update isGrounded
@@ -93,7 +140,7 @@ public class CarMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!this.CanMove || this.currentStunTime <= this.stunTime)
+        if (!this.CanMove)
             return;
 
         if (this.isGrounded)
@@ -107,7 +154,7 @@ public class CarMovement : MonoBehaviour
         }
 
         if (RaceManager.TryGetPosition(this, out var position))
-            this.currentPosition = position;
+            this.CurrentPosition = position;
     }
 
     private void LateUpdate()
@@ -118,11 +165,23 @@ public class CarMovement : MonoBehaviour
 
     private float GetVelocity()
     {
+        // Check stunned
+        if (this.currentStunTime <= this.stunTime)
+            return 0f;
+
+        // Check boost
+        if (this.boostChecks.Any(c => c.Hit.transform != null))
+            this.Boost(this.speedPadBoostTime);
+        if (this.currentBoostTime <= this.boostTime)
+            return this.boostSpeed * 100;
+
+        // Check grounded
         if (!this.isGrounded)
             return 0f;
 
         var activeSpeed = this.forwardMovement > 0 ? this.forwardSpeed : this.reverseSpeed;
 
+        // Check slow ground
         if (mainGroundCheck.Hit.transform != null && mainGroundCheck.Hit.transform.CompareTag(Tags.SLOW_GROUND))
             activeSpeed *= this.slowGroundModifier;
 
@@ -164,10 +223,12 @@ public class CarMovement : MonoBehaviour
         this.currentStunTime = 0;
     }
 
-    private void UpdateStunTime()
+    private void UpdateTimeVariables()
     {
         if (this.currentStunTime <= this.stunTime)
             this.currentStunTime += Time.deltaTime;
+        if (this.currentBoostTime <= this.boostTime)
+            this.currentBoostTime += Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -214,6 +275,26 @@ public class CarMovement : MonoBehaviour
         this.LapsCompleted++;
 
         if (this.LapsCompleted == CheckpointManager.TotalLaps)
-            RaceManager.LogFinish(this);
+            this.EndOfRace();
+        else if (this.TextController != null)
+            StartCoroutine(this.TextController.ShowLap(this.LapsCompleted + 1));
+    }
+
+    private void EndOfRace()
+    {
+        RaceManager.LogFinish(this, out int finalPosition);
+
+        var player = GetComponent<PlayerController>();
+        if (player != null)
+            player.RaceComplete();
+
+        if (this.TextController != null)
+            StartCoroutine(this.TextController.ShowRaceEnd(finalPosition));
+    }
+
+    private void OnDestroy()
+    {
+        if (this.rb != null)
+            Destroy(this.rb.gameObject);
     }
 }
